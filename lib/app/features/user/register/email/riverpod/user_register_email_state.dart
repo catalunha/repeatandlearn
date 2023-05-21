@@ -16,15 +16,19 @@ class UserRegisterEmailStNot extends StateNotifier<UserRegisterEmailState> {
   FutureOr<void> formSubmitted(
       {required String email, required String password}) async {
     state = state.copyWith(status: UserRegisterEmailStateStatus.loading);
+    state = state.copyWith(email: email, password: password);
     try {
-      UserModel? user;
-      // UserModel? user = await _userRepository.register(
-      //     email: state.email, password: state.password);
-      Future.delayed(const Duration(seconds: 3));
+      // UserModel? user;
+      UserModel? user = await _userRepository.register(
+          email: state.email, password: state.password);
+      // await Future.delayed(const Duration(seconds: 5));
       if (user != null) {
         state = state.copyWith(status: UserRegisterEmailStateStatus.success);
+      } else {
+        state = state.copyWith(
+            error: 'Erro no registro do usuario',
+            status: UserRegisterEmailStateStatus.error);
       }
-      state = state.copyWith(status: UserRegisterEmailStateStatus.error);
     } on B4aException catch (e) {
       state = state.copyWith(
           status: UserRegisterEmailStateStatus.error,

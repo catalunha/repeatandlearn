@@ -32,6 +32,7 @@ class _UserRegisterEmailPageState extends ConsumerState<UserRegisterEmailPage> {
     ref.listen<UserRegisterEmailState>(userRegisterEmailStNotProv,
         (_, UserRegisterEmailState state) async {
       if (state.status == UserRegisterEmailStateStatus.error) {
+        print('...${state.error}');
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
