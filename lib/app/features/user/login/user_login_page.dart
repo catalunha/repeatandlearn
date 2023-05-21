@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:repeatandlearn/app/core/authentication/riverpod/auth_prov.dart';
 import 'package:validatorless/validatorless.dart';
 
+import '../../../routes.dart';
 import '../../utils/app_button.dart';
 import '../../utils/app_textformfield.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({Key? key}) : super(key: key);
+class UserLoginPage extends ConsumerStatefulWidget {
+  const UserLoginPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  ConsumerState<UserLoginPage> createState() => _UserLoginPageState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _UserLoginPageState extends ConsumerState<UserLoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailTEC = TextEditingController();
   final _passwordTEC = TextEditingController();
@@ -50,11 +54,7 @@ class _LoginViewState extends State<LoginView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            'Informações para acesso no AgendaRep',
-                            // style: context.textTheme.titleLarge?.copyWith(
-                            //   fontWeight: FontWeight.bold,
-                            //   // color: context.theme.primaryColorDark,
-                            // ),
+                            'Informações para acesso ao Repeat And Learn',
                           ),
                           const SizedBox(
                             height: 20,
@@ -87,6 +87,7 @@ class _LoginViewState extends State<LoginView> {
                           AppButton(
                             label: 'Solicitar acesso',
                             onPressed: () {
+                              ref.read(authChNotProv).isLoggedIn = true;
                               // final formValid =
                               //     _formKey.currentState?.validate() ??
                               //         false;
@@ -141,8 +142,7 @@ class _LoginViewState extends State<LoginView> {
                               const Text('Não possui uma conta ?'),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.of(context)
-                                      .pushNamed('/register/email');
+                                  context.goNamed(AppPage.registerEmail.name);
                                 },
                                 child: const Text(
                                   'CADASTRE-SE.',

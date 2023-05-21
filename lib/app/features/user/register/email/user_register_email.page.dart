@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:validatorless/validatorless.dart';
 
 import '../../../utils/app_button.dart';
 import '../../../utils/app_textformfield.dart';
+import 'riverpod/user_register_email_prov.dart';
+import 'riverpod/user_register_email_state.dart';
 
-class UserRegisterEmailView extends StatefulWidget {
-  const UserRegisterEmailView({Key? key}) : super(key: key);
+class UserRegisterEmailPage extends ConsumerStatefulWidget {
+  const UserRegisterEmailPage({Key? key}) : super(key: key);
 
   @override
-  State<UserRegisterEmailView> createState() => _UserRegisterEmailViewState();
+  ConsumerState<UserRegisterEmailPage> createState() =>
+      _UserRegisterEmailPageState();
 }
 
-class _UserRegisterEmailViewState extends State<UserRegisterEmailView> {
+class _UserRegisterEmailPageState extends ConsumerState<UserRegisterEmailPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailTEC = TextEditingController();
   final _passwordTEC = TextEditingController();
@@ -25,6 +29,56 @@ class _UserRegisterEmailViewState extends State<UserRegisterEmailView> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<UserRegisterEmailState>(userRegisterEmailStNotProv,
+        (_, UserRegisterEmailState state) async {
+      if (state.status == UserRegisterEmailStateStatus.error) {
+        Navigator.of(context).pop();
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(SnackBar(content: Text(state.error ?? '...')));
+      }
+      if (state.status == UserRegisterEmailStateStatus.success) {
+        Navigator.of(context).pop();
+        var contextTemp = Navigator.of(context);
+        await showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return Center(
+              child: Card(
+                color: Colors.green,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('Lembre-se de olhar seu email.'),
+                      const Text('Para validar seu cadastro.'),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context, true);
+                          },
+                          child: const Text('Entendi'))
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+        contextTemp.pop();
+      }
+      if (state.status == UserRegisterEmailStateStatus.loading) {
+        await showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return const Center(child: CircularProgressIndicator());
+          },
+        );
+      }
+    });
     return Scaffold(
       body: LayoutBuilder(
         builder: (_, constrainsts) {
@@ -95,16 +149,18 @@ class _UserRegisterEmailViewState extends State<UserRegisterEmailView> {
                           AppButton(
                             label: 'Cadastrar',
                             onPressed: () {
-                              // final formValid =
-                              //     _formKey.currentState?.validate() ?? false;
-                              // if (formValid) {
-                              //   context.read<UserRegisterEmailBloc>().add(
-                              //         UserRegisterEmailEventFormSubmitted(
-                              //           email: _emailTEC.text,
-                              //           password: _passwordTEC.text,
-                              //         ),
-                              //       );
-                              // }
+                              // context.pop();
+
+                              final formValid =
+                                  _formKey.currentState?.validate() ?? false;
+                              if (formValid) {
+                                ref
+                                    .read(userRegisterEmailStNotProv.notifier)
+                                    .formSubmitted(
+                                      email: _emailTEC.text,
+                                      password: _passwordTEC.text,
+                                    );
+                              }
                             },
                             // width: context.width,
                           ),

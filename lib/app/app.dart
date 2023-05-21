@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/authentication/riverpod/auth_prov.dart';
+import 'routes.dart';
+
 class App extends ConsumerStatefulWidget {
   const App({super.key});
 
@@ -10,7 +13,21 @@ class App extends ConsumerStatefulWidget {
 
 class _AppState extends ConsumerState<App> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container();
+    final goRouterProvIW = ref.watch(goRouterProv);
+    ref.read(authCheckFutProv);
+    return MaterialApp.router(
+      routeInformationParser: goRouterProvIW.routeInformationParser,
+      routeInformationProvider: goRouterProvIW.routeInformationProvider,
+      routerDelegate: goRouterProvIW.routerDelegate,
+      title: 'RepeatAndLearn',
+      theme: ThemeData.dark(useMaterial3: true),
+    );
   }
 }
