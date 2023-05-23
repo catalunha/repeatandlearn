@@ -4,8 +4,8 @@ import 'package:validatorless/validatorless.dart';
 
 import '../../../utils/app_button.dart';
 import '../../../utils/app_textformfield.dart';
-import 'riverpod/user_register_email_prov.dart';
-import 'riverpod/user_register_email_state.dart';
+import 'riverpod/user_register_email_providers.dart';
+import 'riverpod/user_register_email_states.dart';
 
 class UserRegisterEmailPage extends ConsumerStatefulWidget {
   const UserRegisterEmailPage({Key? key}) : super(key: key);
