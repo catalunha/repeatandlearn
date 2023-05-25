@@ -6,7 +6,12 @@ class UserRegisterEmailState {
   final String? email;
   final String? password;
 
-  UserRegisterEmailState({required this.status, this.error, this.email, this.password);
+  UserRegisterEmailState({
+    required this.status,
+    this.error,
+    this.email,
+    this.password,
+  });
   UserRegisterEmailState.initial()
       : status = UserRegisterEmailStateStatus.initial,
         error = '',
@@ -20,11 +25,16 @@ class UserRegisterEmailState {
     String? password,
   }) {
     return UserRegisterEmailState(
-      status ?? this.status,
-      error ?? this.error,
-      email ?? this.email,
-      password ?? this.password,
+      status: status ?? this.status,
+      error: error ?? this.error,
+      email: email ?? this.email,
+      password: password ?? this.password,
     );
+  }
+
+  @override
+  String toString() {
+    return 'UserRegisterEmailState(status: $status, error: $error, email: $email, password: $password)';
   }
 
   @override

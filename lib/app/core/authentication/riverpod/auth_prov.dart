@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../data/b4a/b4a_exception.dart';
 import '../../../data/b4a/init_back4app.dart';
-import '../../repositories/repositories_prov.dart';
+import '../../repositories/repositories_providers.dart';
 import 'auth_state.dart';
 
 final authChNotProv = Provider<AuthChNot>((ref) {

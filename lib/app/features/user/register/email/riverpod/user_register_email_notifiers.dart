@@ -21,7 +21,7 @@ class UserRegisterEmailStNot extends StateNotifier<UserRegisterEmailState> {
     try {
       // UserModel? user;
       UserModel? user = await _userRepository.register(
-          email: state.email, password: state.password);
+          email: state.email!, password: state.password!);
       // await Future.delayed(const Duration(seconds: 5));
       if (user != null) {
         state = state.copyWith(status: UserRegisterEmailStateStatus.success);
