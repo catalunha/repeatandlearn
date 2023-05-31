@@ -81,7 +81,7 @@ final goRouterProv = Provider<GoRouter>(
 enum AppPage {
   splash('/', 'splash'),
   login('/login', 'login'),
-  registerEmail('register_email', 'registerEmail'),
+  registerEmail('registerEmail', 'registerEmail'), // /login/registerEmail
   home('/home', 'home');
 
   final String path;
