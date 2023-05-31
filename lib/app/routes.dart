@@ -13,7 +13,7 @@ import 'features/user/register/email/user_register_email.page.dart';
 
 final goRouterProv = Provider<GoRouter>(
   (ref) {
-    final authChNotProvIR = ref.read(authChNotProv);
+    final authChNotProvIR = ref.watch(authChNotProv);
     return GoRouter(
       debugLogDiagnostics: true,
       initialLocation: AppPage.splash.path,
@@ -23,19 +23,18 @@ final goRouterProv = Provider<GoRouter>(
         log('+++ redirect');
         log('state.location: ${state.location}');
         log('authStatusStProvIR: $authStatus');
-
         if (authStatus == AuthStatus.unauthenticated &&
-            state.location != '/login/register_email') {
-          log('--- redirected to login');
+            state.location != '/login/registerEmail') {
+          log('--- redirected 1 to login');
           return AppPage.login.path;
         }
         if (authStatus == AuthStatus.authenticated &&
             (state.location == AppPage.login.path ||
                 state.location == AppPage.splash.path)) {
-          log('--- redirected to home');
+          log('--- redirected 2 to home');
           return AppPage.home.path;
         }
-        log('--- redirected to ${state.location}');
+        log('--- redirected 3 to ${state.location}');
 
         return null;
       },
