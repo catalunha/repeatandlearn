@@ -71,8 +71,8 @@ final goRouterProv = Provider<GoRouter>(
         )
       ],
       errorBuilder: (context, state) => ErrorPage(
-        errorMsg: state.error.toString(),
         key: state.pageKey,
+        errorMsg: state.error.toString(),
       ),
     );
   },
