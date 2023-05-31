@@ -3,6 +3,6 @@ import 'package:repeatandlearn/app/core/repositories/user_repository.dart';
 
 import '../../data/b4a/table/user_b4a.dart';
 
-final userB4aProv = Provider<UserB4a>((ref) => UserB4a());
-final userRepositoryProv = Provider<UserRepository>(
-    (ref) => UserRepository(userB4a: ref.read(userB4aProv)));
+final userB4aProvider = Provider<UserB4a>((ref) => UserB4a());
+final userRepositoryProvider = Provider<UserRepository>(
+    (ref) => UserRepository(userB4a: ref.read(userB4aProvider)));

@@ -21,7 +21,7 @@ class _AppState extends ConsumerState<App> {
   @override
   Widget build(BuildContext context) {
     final goRouterProvIW = ref.watch(goRouterProv);
-    ref.read(authCheckFutProv);
+    ref.watch(authCheckFutProvider);
     return MaterialApp.router(
       routeInformationParser: goRouterProvIW.routeInformationParser,
       routeInformationProvider: goRouterProvIW.routeInformationProvider,

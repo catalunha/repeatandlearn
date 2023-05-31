@@ -10,7 +10,7 @@ final currentTodo = Provider<UserModel>((ref) => throw UnimplementedError());
 final userRegisterEmailStNotProv =
     StateNotifierProvider<UserRegisterEmailStNot, UserRegisterEmailState>(
         (ref) {
-  final userRepositoryProvIR = ref.read(userRepositoryProv);
+  final userRepositoryProvIR = ref.read(userRepositoryProvider);
 
   return UserRegisterEmailStNot(userRepository: userRepositoryProvIR);
 });

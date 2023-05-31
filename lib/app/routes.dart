@@ -10,10 +10,11 @@ import 'features/home/home_page.dart';
 import 'features/splash/splash_page.dart';
 import 'features/user/login/user_login_page.dart';
 import 'features/user/register/email/user_register_email.page.dart';
+import 'features/user/userprofile/edit/user_profile_edit_page.dart';
 
 final goRouterProv = Provider<GoRouter>(
   (ref) {
-    final authChNotProvIR = ref.watch(authChNotProv);
+    final authChNotProvIR = ref.watch(authChNotProvider);
     return GoRouter(
       debugLogDiagnostics: true,
       initialLocation: AppPage.splash.path,
@@ -62,12 +63,22 @@ final goRouterProv = Provider<GoRouter>(
               ),
             ]),
         GoRoute(
-          path: AppPage.home.path,
-          name: AppPage.home.name,
-          builder: (context, state) => HomePage(
-            key: state.pageKey,
-          ),
-        )
+            path: AppPage.home.path,
+            name: AppPage.home.name,
+            builder: (context, state) => HomePage(
+                  key: state.pageKey,
+                ),
+            routes: [
+              GoRoute(
+                path: AppPage.userProfileEdit.path,
+                name: AppPage.userProfileEdit.name,
+                builder: (context, state) {
+                  return UserProfileEditPage(
+                    key: state.pageKey,
+                  );
+                },
+              )
+            ])
       ],
       errorBuilder: (context, state) => ErrorPage(
         key: state.pageKey,
@@ -81,7 +92,8 @@ enum AppPage {
   splash('/', 'splash'),
   login('/login', 'login'),
   registerEmail('registerEmail', 'registerEmail'), // /login/registerEmail
-  home('/home', 'home');
+  home('/home', 'home'),
+  userProfileEdit('userProfile/edit', 'userProfileEdit');
 
   final String path;
   final String name;

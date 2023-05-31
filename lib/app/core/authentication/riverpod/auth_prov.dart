@@ -7,7 +7,7 @@ import '../../../data/b4a/init_back4app.dart';
 import '../../repositories/repositories_providers.dart';
 import 'auth_state.dart';
 
-final authChNotProv = Provider<AuthChNot>((ref) {
+final authChNotProvider = Provider<AuthChNot>((ref) {
   return AuthChNot();
 });
 
@@ -15,9 +15,9 @@ final authChNotProv = Provider<AuthChNot>((ref) {
 // final authErrorMsgProv = StateProvider<String>((ref) => '');
 // final currentUser = Provider<UserModel>((ref) => throw UnimplementedError());
 
-final authCheckFutProv = FutureProvider<void>((ref) async {
-  final authChNotProvIR = ref.read(authChNotProv);
-  final userRepositoryProvIR = ref.read(userRepositoryProv);
+final authCheckFutProvider = FutureProvider<void>((ref) async {
+  final authChNotProvIR = ref.read(authChNotProvider);
+  final userRepositoryProvIR = ref.read(userRepositoryProvider);
   final InitBack4app initBack4app = InitBack4app();
   try {
     final bool initParse = await initBack4app.init();
