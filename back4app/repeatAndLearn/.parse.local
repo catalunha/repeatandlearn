@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "_default": {
+      "link": "repeatAndLearn"
+    },
+    "repeatAndLearn": {
+      "applicationId": "sWXUZcAyjRMpRgwBnZPDy6Cqa0LXMyl9AfAIXvPY"
+    }
+  }
+}

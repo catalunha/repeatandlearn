@@ -1,8 +1,6 @@
-# repeatandlearn
+# Repeat And Learn
 
-A new Flutter project.
+Seja bem vindo,
 
-## Getting Started
-
-https://www.youtube.com/watch?v=v7N8AVe0ZB8
+Aqui aprendemos matemática por repetição contínua e esparçada.
 
