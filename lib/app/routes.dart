@@ -10,7 +10,7 @@ import 'features/home/home_page.dart';
 import 'features/splash/splash_page.dart';
 import 'features/user/login/user_login_page.dart';
 import 'features/user/register/email/user_register_email.page.dart';
-import 'features/user/userprofile/edit/user_profile_edit_page.dart';
+import 'features/user_profile/edit/user_profile_edit_page.dart';
 
 final goRouterProv = Provider<GoRouter>(
   (ref) {

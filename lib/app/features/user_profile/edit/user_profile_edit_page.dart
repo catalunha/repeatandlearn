@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:repeatandlearn/app/core/authentication/riverpod/auth_prov.dart';
-import 'package:repeatandlearn/app/features/user/userprofile/edit/providers/providers.dart';
 import 'package:repeatandlearn/app/features/utils/app_mixin_messages.dart';
 import 'package:validatorless/validatorless.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../utils/app_mixin_loader.dart';
-import '../../../utils/app_textformfield.dart';
+import '../../utils/app_mixin_loader.dart';
+import '../../utils/app_textformfield.dart';
+import 'providers/providers.dart';
 import 'providers/states.dart';
 
 class UserProfileEditPage extends ConsumerStatefulWidget {

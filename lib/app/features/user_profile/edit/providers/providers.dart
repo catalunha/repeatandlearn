@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:repeatandlearn/app/core/repositories/repositories_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../../core/authentication/riverpod/auth_prov.dart';
-import '../../../../../core/models/user_profile_model.dart';
+import '../../../../core/authentication/riverpod/auth_prov.dart';
+import '../../../../core/models/user_profile_model.dart';
+import '../../../../core/repositories/repositories_providers.dart';
 import 'states.dart';
 
 part 'providers.g.dart';
