@@ -43,8 +43,8 @@ class _UserRegisterEmailPageState extends ConsumerState<UserRegisterEmailPage>
         showLoader(context);
       }
       if (next == UserRegisterEmailStatus.success) {
-        var contextTemp = Navigator.of(context);
         hideLoader(context);
+        var contextTemp = Navigator.of(context);
         await showDialog(
           barrierDismissible: false,
           context: context,

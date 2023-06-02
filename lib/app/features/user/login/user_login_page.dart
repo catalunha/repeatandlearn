@@ -106,12 +106,16 @@ class _UserLoginPageState extends ConsumerState<UserLoginPage>
                           AppButton(
                             label: 'Solicitar acesso',
                             onPressed: () async {
-                              ref
-                                  .read(userLoginEmailFormProvider.notifier)
-                                  .submit(
-                                    email: _emailTEC.text,
-                                    password: _passwordTEC.text,
-                                  );
+                              final formValid =
+                                  _formKey.currentState?.validate() ?? false;
+                              if (formValid) {
+                                ref
+                                    .read(userLoginEmailFormProvider.notifier)
+                                    .submit(
+                                      email: _emailTEC.text,
+                                      password: _passwordTEC.text,
+                                    );
+                              }
                             },
                           ),
                           const SizedBox(
