@@ -6,20 +6,21 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userProfileEditHash() => r'6176f5eeed8ae42e275e3383756eb6db422dda54';
+String _$userRegisterEmailFormHash() =>
+    r'3a18e8abcbbc4b7e579b4ba346fffc0af50adcfc';
 
-/// See also [UserProfileEdit].
-@ProviderFor(UserProfileEdit)
-final userProfileEditProvider =
-    AutoDisposeNotifierProvider<UserProfileEdit, bool>.internal(
-  UserProfileEdit.new,
-  name: r'userProfileEditProvider',
+/// See also [UserRegisterEmailForm].
+@ProviderFor(UserRegisterEmailForm)
+final userRegisterEmailFormProvider =
+    AutoDisposeNotifierProvider<UserRegisterEmailForm, bool>.internal(
+  UserRegisterEmailForm.new,
+  name: r'userRegisterEmailFormProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$userProfileEditHash,
+      : _$userRegisterEmailFormHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$UserProfileEdit = AutoDisposeNotifier<bool>;
+typedef _$UserRegisterEmailForm = AutoDisposeNotifier<bool>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

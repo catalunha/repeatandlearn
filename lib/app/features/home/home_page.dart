@@ -17,7 +17,7 @@ class HomePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Olá ${auth.user?.userProfile?.name ?? "Atualize seu perfil."}',
+          'Olá ${auth.user?.userProfile?.name ?? auth.user?.email}',
         ),
         actions: const [
           HomePopMenu(),

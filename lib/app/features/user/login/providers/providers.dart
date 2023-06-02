@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -9,41 +11,20 @@ import 'states.dart';
 
 part 'providers.g.dart';
 
-// @riverpod
-// UserLoginStatus userLoginStatus(UserLoginStatusRef ref) {
-//   return UserLoginStatus.initial;
-// }
-
 final userLoginStatusProvider = StateProvider.autoDispose<UserLoginStatus>(
     (ref) => UserLoginStatus.initial);
 
 final userLoginErrorProvider = StateProvider.autoDispose<String>((ref) => '');
 
-// @riverpod
-// String userLoginError(UserLoginErrorRef ref) {
-//   return '';
-// }
-
 @riverpod
-class UserLoginEmailPasswordRequest extends _$UserLoginEmailPasswordRequest {
+class UserLoginEmailForm extends _$UserLoginEmailForm {
   @override
-  Future<UserModel?> build() async {
-    return null;
+  bool build() {
+    return false;
   }
 
-  Future<void> loginRequest(
-      {required String email, required String password}) async {
-    state = const AsyncLoading();
-    // state = await AsyncValue.guard(() async {
-    //   final repository = ref.read(userRepositoryProvider);
-    //   final authChNotProvIR = ref.read(authChNotProv);
-
-    //   UserModel? user =
-    //       await repository.login(email: email, password: password);
-    //   authChNotProvIR.user = user;
-
-    //   return user;
-    // });
+  Future<void> submit({required String email, required String password}) async {
+    ref.read(userLoginStatusProvider.notifier).state = UserLoginStatus.loading;
 
     try {
       final repository = ref.read(userRepositoryProvider);
@@ -52,12 +33,17 @@ class UserLoginEmailPasswordRequest extends _$UserLoginEmailPasswordRequest {
       UserModel? user =
           await repository.login(email: email, password: password);
       authChNotProvIR.user = user;
-
-      state = AsyncData(user);
+      ref.read(userLoginStatusProvider.notifier).state =
+          UserLoginStatus.success;
     } on B4aException catch (e, st) {
-      state = AsyncValue.error('texto 2', st);
+      ref.read(userLoginErrorProvider.notifier).state = e.message;
+      ref.read(userLoginStatusProvider.notifier).state = UserLoginStatus.error;
+      log('$st');
     } catch (e, st) {
-      state = AsyncValue.error('Erro desconhecido no login.', st);
+      ref.read(userLoginErrorProvider.notifier).state =
+          'Erro desconhecido no login.';
+      ref.read(userLoginStatusProvider.notifier).state = UserLoginStatus.error;
+      log('$st');
     }
   }
 }

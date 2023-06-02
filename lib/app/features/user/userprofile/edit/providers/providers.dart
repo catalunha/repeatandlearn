@@ -22,7 +22,7 @@ class UserProfileEdit extends _$UserProfileEdit {
     return false;
   }
 
-  Future<void> submitForm({required String name}) async {
+  Future<void> userProfileEditSubmitForm({required String name}) async {
     ref.read(userProfileEditStatusProvider.notifier).state =
         UserProfileEditStatus.loading;
     try {

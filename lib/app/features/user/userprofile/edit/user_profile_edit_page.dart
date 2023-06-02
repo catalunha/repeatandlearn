@@ -32,6 +32,7 @@ class _UserProfileEditPageState extends ConsumerState<UserProfileEditPage>
 
   @override
   void dispose() {
+    _nameTec.dispose();
     hideLoader(context);
     super.dispose();
   }
@@ -66,7 +67,7 @@ class _UserProfileEditPageState extends ConsumerState<UserProfileEditPage>
           if (formValid) {
             ref
                 .read(userProfileEditProvider.notifier)
-                .submitForm(name: _nameTec.text);
+                .userProfileEditSubmitForm(name: _nameTec.text);
           }
         },
       ),

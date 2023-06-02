@@ -9,6 +9,7 @@ import '../../utils/app_mixin_loader.dart';
 import '../../utils/app_mixin_messages.dart';
 import '../../utils/app_textformfield.dart';
 import 'providers/providers.dart';
+import 'providers/states.dart';
 
 class UserLoginPage extends ConsumerStatefulWidget {
   const UserLoginPage({Key? key}) : super(key: key);
@@ -32,33 +33,25 @@ class _UserLoginPageState extends ConsumerState<UserLoginPage>
   void dispose() {
     _emailTEC.dispose();
     _passwordTEC.dispose();
+    hideLoader(context);
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(userLoginEmailPasswordRequestProvider, (prev, next) {
-      next.when(data: (data) {
-        print(data);
-      }, error: (error, st) {
-        print('++++ error');
-        Navigator.of(context).pop();
-        print(error);
-        // print(st);
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(SnackBar(content: Text('$error')));
-
-        print('--- error');
-      }, loading: () async {
-        await showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (BuildContext context) {
-            return const Center(child: CircularProgressIndicator());
-          },
-        );
-      });
+    ref.listen<UserLoginStatus>(userLoginStatusProvider, (prev, next) {
+      if (next == UserLoginStatus.error) {
+        hideLoader(context);
+        final error = ref.read(userLoginErrorProvider);
+        showMessageError(context, error);
+      }
+      if (next == UserLoginStatus.success) {
+        hideLoader(context);
+      }
+      if (next == UserLoginStatus.loading) {
+        showLoader(context);
+      }
     });
     return Scaffold(
       body: LayoutBuilder(
@@ -113,28 +106,13 @@ class _UserLoginPageState extends ConsumerState<UserLoginPage>
                           AppButton(
                             label: 'Solicitar acesso',
                             onPressed: () async {
-                              // ref.read(authChNotProv).isLoggedIn = true;
-                              // ref.read(authChNotProv).logout();
-                              await ref
-                                  .read(userLoginEmailPasswordRequestProvider
-                                      .notifier)
-                                  .loginRequest(
+                              ref
+                                  .read(userLoginEmailFormProvider.notifier)
+                                  .submit(
                                     email: _emailTEC.text,
                                     password: _passwordTEC.text,
                                   );
-                              // final formValid =
-                              //     _formKey.currentState?.validate() ??
-                              //         false;
-                              // if (formValid) {
-                              //   context.read<LoginBloc>().add(
-                              //         LoginEventLoginSubmitted(
-                              //           email: _emailTEC.text,
-                              //           password: _passwordTEC.text,
-                              //         ),
-                              //       );
-                              // }
                             },
-                            // width: context.size.width,
                           ),
                           const SizedBox(
                             height: 50,
@@ -145,23 +123,8 @@ class _UserLoginPageState extends ConsumerState<UserLoginPage>
                               const Text('Esqueceu sua senha ?'),
                               TextButton(
                                 onPressed: () {
-                                  // if (_emailTEC.text.isNotEmpty) {
-                                  //   context.read<LoginBloc>().add(
-                                  //         LoginEventRequestPasswordReset(
-                                  //           email: _emailTEC.text,
-                                  //         ),
-                                  //       );
-                                  //   ScaffoldMessenger.of(context)
-                                  //     ..hideCurrentSnackBar()
-                                  //     ..showSnackBar(const SnackBar(
-                                  //         content: Text(
-                                  //             'Enviamos instruções para seu email.')));
-                                  // } else {
-                                  //   ScaffoldMessenger.of(context)
-                                  //     ..hideCurrentSnackBar()
-                                  //     ..showSnackBar(const SnackBar(
-                                  //         content: Text('Informe um email')));
-                                  // }
+                                  showMessageInfo(
+                                      context, 'Ação não implementada');
                                 },
                                 child: const Text(
                                   'Criar uma nova.',

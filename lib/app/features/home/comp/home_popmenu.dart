@@ -30,7 +30,7 @@ class HomePopMenu extends ConsumerWidget {
               label: const Text('Sair'),
               onPressed: () {
                 Navigator.pop(context);
-                ref.read(authChNotProvider).logout();
+                ref.read(logoutProvider);
               },
               icon: const Icon(Icons.exit_to_app),
             ),
