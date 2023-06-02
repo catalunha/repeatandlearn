@@ -5,6 +5,8 @@ import 'package:validatorless/validatorless.dart';
 
 import '../../../routes.dart';
 import '../../utils/app_button.dart';
+import '../../utils/app_mixin_loader.dart';
+import '../../utils/app_mixin_messages.dart';
 import '../../utils/app_textformfield.dart';
 import 'providers/providers.dart';
 
@@ -15,7 +17,8 @@ class UserLoginPage extends ConsumerStatefulWidget {
   ConsumerState<UserLoginPage> createState() => _UserLoginPageState();
 }
 
-class _UserLoginPageState extends ConsumerState<UserLoginPage> {
+class _UserLoginPageState extends ConsumerState<UserLoginPage>
+    with Loader, Messages {
   final _formKey = GlobalKey<FormState>();
   final _emailTEC = TextEditingController();
   final _passwordTEC = TextEditingController();

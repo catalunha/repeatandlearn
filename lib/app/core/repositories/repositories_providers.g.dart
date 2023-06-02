@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'providers.dart';
+part of 'repositories_providers.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userLoginEmailPasswordRequestHash() =>
-    r'36f448a69bf847cb0e60c9920a32f1ba957b59aa';
+String _$userProfileRepositoryHash() =>
+    r'328854b595bf97576d62baf57e80ec59e36a5858';
 
-/// See also [UserLoginEmailPasswordRequest].
-@ProviderFor(UserLoginEmailPasswordRequest)
-final userLoginEmailPasswordRequestProvider = AutoDisposeAsyncNotifierProvider<
-    UserLoginEmailPasswordRequest, UserModel?>.internal(
-  UserLoginEmailPasswordRequest.new,
-  name: r'userLoginEmailPasswordRequestProvider',
+/// See also [userProfileRepository].
+@ProviderFor(userProfileRepository)
+final userProfileRepositoryProvider =
+    AutoDisposeProvider<UserProfileRepository>.internal(
+  userProfileRepository,
+  name: r'userProfileRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$userLoginEmailPasswordRequestHash,
+      : _$userProfileRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$UserLoginEmailPasswordRequest = AutoDisposeAsyncNotifier<UserModel?>;
+typedef UserProfileRepositoryRef
+    = AutoDisposeProviderRef<UserProfileRepository>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

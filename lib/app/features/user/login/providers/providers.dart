@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/authentication/riverpod/auth_prov.dart';
@@ -8,15 +9,20 @@ import 'states.dart';
 
 part 'providers.g.dart';
 
-@riverpod
-UserLoginStatus userLoginStatus(UserLoginStatusRef ref) {
-  return UserLoginStatus.initial;
-}
+// @riverpod
+// UserLoginStatus userLoginStatus(UserLoginStatusRef ref) {
+//   return UserLoginStatus.initial;
+// }
 
-@riverpod
-String userLoginError(UserLoginErrorRef ref) {
-  return '';
-}
+final userLoginStatusProvider = StateProvider.autoDispose<UserLoginStatus>(
+    (ref) => UserLoginStatus.initial);
+
+final userLoginErrorProvider = StateProvider.autoDispose<String>((ref) => '');
+
+// @riverpod
+// String userLoginError(UserLoginErrorRef ref) {
+//   return '';
+// }
 
 @riverpod
 class UserLoginEmailPasswordRequest extends _$UserLoginEmailPasswordRequest {

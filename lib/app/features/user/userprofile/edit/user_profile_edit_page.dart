@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:repeatandlearn/app/core/authentication/riverpod/auth_prov.dart';
+import 'package:repeatandlearn/app/features/user/userprofile/edit/providers/providers.dart';
+import 'package:repeatandlearn/app/features/utils/app_mixin_messages.dart';
 import 'package:validatorless/validatorless.dart';
 
-import '../../../../core/models/user_model.dart';
+import '../../../utils/app_mixin_loader.dart';
 import '../../../utils/app_textformfield.dart';
+import 'providers/states.dart';
 
 class UserProfileEditPage extends ConsumerStatefulWidget {
   const UserProfileEditPage({
@@ -16,19 +19,42 @@ class UserProfileEditPage extends ConsumerStatefulWidget {
       _UserProfileEditPageState();
 }
 
-class _UserProfileEditPageState extends ConsumerState<UserProfileEditPage> {
+class _UserProfileEditPageState extends ConsumerState<UserProfileEditPage>
+    with Loader, Messages {
   final _formKey = GlobalKey<FormState>();
   final _nameTec = TextEditingController();
-  UserModel? user;
   @override
   void initState() {
     super.initState();
-    user = ref.read(authChNotProvider).user;
+    final user = ref.read(authChNotProvider).user;
     _nameTec.text = user?.userProfile?.name ?? "";
   }
 
   @override
+  void dispose() {
+    hideLoader(context);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    ref.listen<UserProfileEditStatus>(userProfileEditStatusProvider,
+        (previous, next) async {
+      if (next == UserProfileEditStatus.error) {
+        hideLoader(context);
+        final error = ref.read(userProfileEditErrorProvider);
+        showMessageError(context, error);
+      }
+      if (next == UserProfileEditStatus.success) {
+        hideLoader(context); //sai do Dialog do loading
+        Navigator.of(context).pop(); //sai da pagina
+      }
+      if (next == UserProfileEditStatus.loading) {
+        showLoader(context);
+      }
+    });
+
+    final user = ref.read(authChNotProvider).user;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Editar seu perfil'),
@@ -38,13 +64,9 @@ class _UserProfileEditPageState extends ConsumerState<UserProfileEditPage> {
         onPressed: () async {
           final formValid = _formKey.currentState?.validate() ?? false;
           if (formValid) {
-            // context.read<UserProfileEditBloc>().add(
-            //       UserProfileEditEventFormSubmitted(
-            //         name: _nameTec.text,
-            //         cpf: _cpfTec.text,
-            //         phone: _phoneTec.text,
-            //       ),
-            //     );
+            ref
+                .read(userProfileEditProvider.notifier)
+                .submitForm(name: _nameTec.text);
           }
         },
       ),
@@ -77,19 +99,4 @@ class _UserProfileEditPageState extends ConsumerState<UserProfileEditPage> {
       ),
     );
   }
-
-  // Future<bool> saveProfile() async {
-  //   final formValid = _formKey.currentState?.validate() ?? false;
-  //   if (formValid) {
-  //     await widget._userProfileController.append(
-  //       nickname: _nicknameTec.text,
-  //       name: _nameTec.text,
-  //       phone: _phoneTec.text,
-  //       cpf: _cpfTec.text,
-  //       cpf: _cpfTec.text,
-  //     );
-  //     return true;
-  //   }
-  //   return false;
-  // }
 }
