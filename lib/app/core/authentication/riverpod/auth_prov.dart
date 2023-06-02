@@ -17,7 +17,7 @@ final authChNotProvider = Provider<AuthChNot>((ref) {
 void logout(LogoutRef ref) {
   final repository = ref.read(userRepositoryProvider);
   repository.logout();
-  final authChNot = ref.watch(authChNotProvider);
+  final authChNot = ref.read(authChNotProvider);
   authChNot.logout();
 }
 
