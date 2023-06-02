@@ -127,8 +127,19 @@ class _UserLoginPageState extends ConsumerState<UserLoginPage>
                               const Text('Esqueceu sua senha ?'),
                               TextButton(
                                 onPressed: () {
-                                  showMessageInfo(
-                                      context, 'Ação não implementada');
+                                  if (_emailTEC.text.isNotEmpty) {
+                                    ref
+                                        .read(
+                                            userLoginEmailFormProvider.notifier)
+                                        .resetPassword(
+                                          email: _emailTEC.text,
+                                        );
+                                    showMessageInfo(context,
+                                        'Enviamos instruções para seu email.');
+                                  } else {
+                                    showMessageError(
+                                        context, 'Informe o email cadastrado');
+                                  }
                                 },
                                 child: const Text(
                                   'Criar uma nova.',

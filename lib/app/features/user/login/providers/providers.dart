@@ -46,4 +46,26 @@ class UserLoginEmailForm extends _$UserLoginEmailForm {
       log('$st');
     }
   }
+
+  Future<void> resetPassword({required String email}) async {
+    ref.read(userLoginStatusProvider.notifier).state = UserLoginStatus.loading;
+
+    try {
+      final repository = ref.read(userRepositoryProvider);
+
+      await repository.requestPasswordReset(email);
+      ref.read(userLoginStatusProvider.notifier).state =
+          UserLoginStatus.success;
+    } on B4aException catch (e, st) {
+      ref.read(userLoginErrorProvider.notifier).state = e.message;
+      ref.read(userLoginStatusProvider.notifier).state = UserLoginStatus.error;
+      log('$st');
+    } catch (e, st) {
+      ref.read(userLoginErrorProvider.notifier).state =
+          'Erro desconhecido ao resetar senha.';
+      ref.read(userLoginStatusProvider.notifier).state = UserLoginStatus.error;
+      log('$st');
+      log('$st');
+    }
+  }
 }
