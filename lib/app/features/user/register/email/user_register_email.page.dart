@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:validatorless/validatorless.dart';
 
 import '../../../utils/app_button.dart';
+import '../../../utils/app_mixin_loader.dart';
+import '../../../utils/app_mixin_messages.dart';
 import '../../../utils/app_textformfield.dart';
-import 'riverpod/user_register_email_providers.dart';
-import 'riverpod/user_register_email_states.dart';
+import 'riverpod/providers.dart';
+import 'riverpod/states.dart';
 
 class UserRegisterEmailPage extends ConsumerStatefulWidget {
   const UserRegisterEmailPage({Key? key}) : super(key: key);
@@ -15,7 +17,8 @@ class UserRegisterEmailPage extends ConsumerStatefulWidget {
       _UserRegisterEmailPageState();
 }
 
-class _UserRegisterEmailPageState extends ConsumerState<UserRegisterEmailPage> {
+class _UserRegisterEmailPageState extends ConsumerState<UserRegisterEmailPage>
+    with Loader, Messages {
   final _formKey = GlobalKey<FormState>();
   final _emailTEC = TextEditingController();
   final _passwordTEC = TextEditingController();
@@ -29,17 +32,18 @@ class _UserRegisterEmailPageState extends ConsumerState<UserRegisterEmailPage> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<UserRegisterEmailState>(userRegisterEmailStNotProv,
-        (_, UserRegisterEmailState state) async {
-      if (state.status == UserRegisterEmailStateStatus.error) {
-        print('...${state.error}');
-        Navigator.of(context).pop();
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(SnackBar(content: Text(state.error ?? '...')));
+    ref.listen<UserRegisterEmailStatus>(userRegisterEmailStatusProvider,
+        (prev, next) async {
+      if (next == UserRegisterEmailStatus.error) {
+        hideLoader(context);
+        final error = ref.read(userRegisterEmailErrorProvider);
+        showMessageError(context, error);
       }
-      if (state.status == UserRegisterEmailStateStatus.success) {
-        Navigator.of(context).pop();
+      if (next == UserRegisterEmailStatus.loading) {
+        showLoader(context);
+      }
+      if (next == UserRegisterEmailStatus.success) {
+        hideLoader(context);
         var contextTemp = Navigator.of(context);
         await showDialog(
           barrierDismissible: false,
@@ -69,15 +73,6 @@ class _UserRegisterEmailPageState extends ConsumerState<UserRegisterEmailPage> {
           },
         );
         contextTemp.pop();
-      }
-      if (state.status == UserRegisterEmailStateStatus.loading) {
-        await showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (BuildContext context) {
-            return const Center(child: CircularProgressIndicator());
-          },
-        );
       }
     });
     return Scaffold(
@@ -156,8 +151,9 @@ class _UserRegisterEmailPageState extends ConsumerState<UserRegisterEmailPage> {
                                   _formKey.currentState?.validate() ?? false;
                               if (formValid) {
                                 ref
-                                    .read(userRegisterEmailStNotProv.notifier)
-                                    .formSubmitted(
+                                    .read(
+                                        userRegisterEmailFormProvider.notifier)
+                                    .submit(
                                       email: _emailTEC.text,
                                       password: _passwordTEC.text,
                                     );

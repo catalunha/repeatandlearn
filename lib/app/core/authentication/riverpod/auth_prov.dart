@@ -1,23 +1,33 @@
 import 'dart:developer';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../data/b4a/b4a_exception.dart';
 import '../../../data/b4a/init_back4app.dart';
 import '../../repositories/repositories_providers.dart';
 import 'auth_state.dart';
 
-final authChNotProv = Provider<AuthChNot>((ref) {
+part 'auth_prov.g.dart';
+
+final authChNotProvider = Provider<AuthChNot>((ref) {
   return AuthChNot();
 });
+
+@riverpod
+void logout(LogoutRef ref) {
+  final repository = ref.read(userRepositoryProvider);
+  repository.logout();
+  final authChNot = ref.read(authChNotProvider);
+  authChNot.logout();
+}
 
 // final authStatusStProv = StateProvider<AuthStatus>((ref) => AuthStatus.unknown);
 // final authErrorMsgProv = StateProvider<String>((ref) => '');
 // final currentUser = Provider<UserModel>((ref) => throw UnimplementedError());
 
-final authCheckFutProv = FutureProvider<void>((ref) async {
-  final authChNotProvIR = ref.read(authChNotProv);
-  final userRepositoryProvIR = ref.read(userRepositoryProv);
+final authCheckFutProvider = FutureProvider<void>((ref) async {
+  final authChNotProvIR = ref.read(authChNotProvider);
+  final userRepositoryProvIR = ref.read(userRepositoryProvider);
   final InitBack4app initBack4app = InitBack4app();
   try {
     final bool initParse = await initBack4app.init();

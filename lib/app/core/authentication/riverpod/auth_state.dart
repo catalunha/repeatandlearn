@@ -12,7 +12,7 @@ enum AuthStatus {
 class AuthChNot extends ChangeNotifier {
   AuthStatus _status = AuthStatus.unknown;
   UserModel? _user;
-  bool _isLoggedIn = false;
+  // final bool _isLoggedIn = false;
 
   UserModel? get user => _user;
   set user(UserModel? value) {
@@ -25,16 +25,16 @@ class AuthChNot extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get isLoggedIn => _isLoggedIn;
-  set isLoggedIn(bool value) {
-    _isLoggedIn = value;
-    if (_isLoggedIn) {
-      status = AuthStatus.authenticated;
-    } else {
-      status = AuthStatus.unauthenticated;
-    }
-    notifyListeners();
-  }
+  // bool get isLoggedIn => _isLoggedIn;
+  // set isLoggedIn(bool value) {
+  //   _isLoggedIn = value;
+  //   if (_isLoggedIn) {
+  //     status = AuthStatus.authenticated;
+  //   } else {
+  //     status = AuthStatus.unauthenticated;
+  //   }
+  //   notifyListeners();
+  // }
 
   AuthStatus get status => _status;
   set status(AuthStatus value) {
