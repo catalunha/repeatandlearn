@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 mixin Loader {
   var isOpen = false;
@@ -18,7 +19,7 @@ mixin Loader {
   void hideLoader(BuildContext context) {
     if (isOpen) {
       isOpen = false;
-      Navigator.of(context).pop();
+      context.pop();
     }
   }
 }

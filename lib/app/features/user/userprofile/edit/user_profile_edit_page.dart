@@ -4,6 +4,7 @@ import 'package:repeatandlearn/app/core/authentication/riverpod/auth_prov.dart';
 import 'package:repeatandlearn/app/features/user/userprofile/edit/providers/providers.dart';
 import 'package:repeatandlearn/app/features/utils/app_mixin_messages.dart';
 import 'package:validatorless/validatorless.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../utils/app_mixin_loader.dart';
 import '../../../utils/app_textformfield.dart';
@@ -48,7 +49,7 @@ class _UserProfileEditPageState extends ConsumerState<UserProfileEditPage>
       }
       if (next == UserProfileEditStatus.success) {
         hideLoader(context); //sai do Dialog do loading
-        Navigator.of(context).pop(); //sai da pagina
+        context.pop(); //sai da pagina
       }
       if (next == UserProfileEditStatus.loading) {
         showLoader(context);
