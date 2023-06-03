@@ -2,40 +2,40 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:repeatandlearn/app/features/task/controller/providers.dart';
 
-import '../../core/models/level_model.dart';
-import 'comp/task_card.dart';
+import '../../core/models/task_model.dart';
+import 'comp/calc_card.dart';
+import 'controller/providers.dart';
 
-class TaskPage extends ConsumerWidget {
-  final LevelModel model;
-  const TaskPage({
+class CalcPage extends ConsumerWidget {
+  final TaskModel model;
+  const CalcPage({
     super.key,
     required this.model,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final taskList = ref.watch(taskListProvider(level: model));
+    final calcList = ref.watch(calcListProvider(task: model));
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Tasks of Level: ${model.title}',
+          'Calcs of Level: ${model.level.title} - Task: ${model.title}',
         ),
       ),
-      body: taskList.when(
+      body: calcList.when(
         data: (data) {
           return ListView.builder(
             itemCount: data.length,
             itemBuilder: (context, index) {
-              return TaskCard(
+              return CalcCard(
                 model: data[index],
               );
             },
           );
         },
         error: (error, stackTrace) {
-          log('Erro em TaskPage build');
+          log('Erro em CalcPage build');
           log('$error');
           log('$stackTrace');
           return const Center(

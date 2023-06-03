@@ -3,6 +3,7 @@ import 'package:repeatandlearn/app/core/repositories/user_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../data/b4a/table/user_b4a.dart';
+import 'calc_repository.dart';
 import 'level_repository.dart';
 import 'task_repository.dart';
 
@@ -26,4 +27,9 @@ LevelRepository levelRepository(LevelRepositoryRef ref) {
 @riverpod
 TaskRepository taskRepository(TaskRepositoryRef ref) {
   return TaskRepository();
+}
+
+@riverpod
+CalcRepository calcRepository(CalcRepositoryRef ref) {
+  return CalcRepository();
 }

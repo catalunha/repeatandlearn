@@ -24,7 +24,7 @@ class LevelCard extends StatelessWidget {
         title: Text(model.title),
         subtitle: Text(model.description),
         onTap: () {
-          context.goNamed(AppPage.tasks.name, extra: model);
+          context.goNamed(AppPage.tasks.name, extra: {'level': model});
         },
       ),
     );

@@ -1,3 +1,1 @@
-// selected TaskModel
-
 // List<TaskModel>

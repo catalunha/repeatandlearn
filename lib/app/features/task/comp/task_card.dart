@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/models/task_model.dart';
+import '../../../routes.dart';
 import '../../utils/app_photo_show.dart';
 
 class TaskCard extends StatelessWidget {
@@ -21,6 +23,10 @@ class TaskCard extends StatelessWidget {
         ),
         title: Text(model.title),
         subtitle: Text(model.description),
+        onTap: () {
+          context.goNamed(AppPage.calcs.name,
+              extra: {'level': model.level, 'task': model});
+        },
       ),
     );
   }

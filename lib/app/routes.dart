@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'core/authentication/riverpod/auth_prov.dart';
 import 'core/authentication/riverpod/auth_state.dart';
-import 'core/models/level_model.dart';
+import 'features/calc/calc_page.dart';
 import 'features/error/error_page.dart';
 import 'features/home/home_page.dart';
 import 'features/splash/splash_page.dart';
@@ -81,16 +81,29 @@ final goRouterProv = Provider<GoRouter>(
               },
             ),
             GoRoute(
-              path: AppPage.tasks.path,
-              name: AppPage.tasks.name,
-              builder: (context, state) {
-                final task = state.extra as LevelModel;
-                return TaskPage(
-                  key: state.pageKey,
-                  model: task,
-                );
-              },
-            )
+                path: AppPage.tasks.path,
+                name: AppPage.tasks.name,
+                builder: (context, state) {
+                  // final level = state.extra as LevelModel;
+                  final level = state.extra as Map<String, dynamic>;
+                  return TaskPage(
+                    key: state.pageKey,
+                    model: level['level'],
+                  );
+                },
+                routes: [
+                  GoRoute(
+                    path: AppPage.calcs.path,
+                    name: AppPage.calcs.name,
+                    builder: (context, state) {
+                      final task = state.extra as Map<String, dynamic>;
+                      return CalcPage(
+                        key: state.pageKey,
+                        model: task['task'],
+                      );
+                    },
+                  ),
+                ])
           ],
         )
       ],
@@ -108,7 +121,8 @@ enum AppPage {
   registerEmail('registerEmail', 'registerEmail'), // /login/registerEmail
   home('/home', 'home'),
   userProfileEdit('userProfile/edit', 'userProfileEdit'),
-  tasks('tasks', 'tasks');
+  tasks('tasks', 'tasks'),
+  calcs('calcs', 'calcs');
 
   final String path;
   final String name;

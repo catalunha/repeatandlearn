@@ -54,4 +54,19 @@ final taskRepositoryProvider = AutoDisposeProvider<TaskRepository>.internal(
 );
 
 typedef TaskRepositoryRef = AutoDisposeProviderRef<TaskRepository>;
+String _$calcRepositoryHash() => r'67fe8f7fca5382f0c2d508d752d813f87d669e76';
+
+/// See also [calcRepository].
+@ProviderFor(calcRepository)
+final calcRepositoryProvider = AutoDisposeProvider<CalcRepository>.internal(
+  calcRepository,
+  name: r'calcRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$calcRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef CalcRepositoryRef = AutoDisposeProviderRef<CalcRepository>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
