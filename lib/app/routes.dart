@@ -5,9 +5,11 @@ import 'package:go_router/go_router.dart';
 
 import 'core/authentication/riverpod/auth_prov.dart';
 import 'core/authentication/riverpod/auth_state.dart';
+import 'core/models/level_model.dart';
 import 'features/error/error_page.dart';
 import 'features/home/home_page.dart';
 import 'features/splash/splash_page.dart';
+import 'features/task/task_page.dart';
 import 'features/user/login/user_login_page.dart';
 import 'features/user/register/email/user_register_email.page.dart';
 import 'features/user_profile/edit/user_profile_edit_page.dart';
@@ -63,22 +65,34 @@ final goRouterProv = Provider<GoRouter>(
               ),
             ]),
         GoRoute(
-            path: AppPage.home.path,
-            name: AppPage.home.name,
-            builder: (context, state) => HomePage(
+          path: AppPage.home.path,
+          name: AppPage.home.name,
+          builder: (context, state) => HomePage(
+            key: state.pageKey,
+          ),
+          routes: [
+            GoRoute(
+              path: AppPage.userProfileEdit.path,
+              name: AppPage.userProfileEdit.name,
+              builder: (context, state) {
+                return UserProfileEditPage(
                   key: state.pageKey,
-                ),
-            routes: [
-              GoRoute(
-                path: AppPage.userProfileEdit.path,
-                name: AppPage.userProfileEdit.name,
-                builder: (context, state) {
-                  return UserProfileEditPage(
-                    key: state.pageKey,
-                  );
-                },
-              )
-            ])
+                );
+              },
+            ),
+            GoRoute(
+              path: AppPage.tasks.path,
+              name: AppPage.tasks.name,
+              builder: (context, state) {
+                final task = state.extra as LevelModel;
+                return TaskPage(
+                  key: state.pageKey,
+                  model: task,
+                );
+              },
+            )
+          ],
+        )
       ],
       errorBuilder: (context, state) => ErrorPage(
         key: state.pageKey,
@@ -93,7 +107,8 @@ enum AppPage {
   login('/login', 'login'),
   registerEmail('registerEmail', 'registerEmail'), // /login/registerEmail
   home('/home', 'home'),
-  userProfileEdit('userProfile/edit', 'userProfileEdit');
+  userProfileEdit('userProfile/edit', 'userProfileEdit'),
+  tasks('tasks', 'tasks');
 
   final String path;
   final String name;

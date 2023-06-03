@@ -7,16 +7,9 @@ import '../../../data/b4a/entity/level_entity.dart';
 
 part 'providers.g.dart';
 
-@riverpod
-class LevelList extends _$LevelList {
-  @override
-  FutureOr<List<LevelModel>> build() {
-    return _list();
-  }
-
-  Future<List<LevelModel>> _list() async {
-    QueryBuilder<ParseObject> query =
-        QueryBuilder<ParseObject>(ParseObject(LevelEntity.className));
-    return await ref.read(levelRepositoryProvider).list(query: query);
-  }
+@Riverpod(keepAlive: true)
+FutureOr<List<LevelModel>> levelList(LevelListRef ref) async {
+  QueryBuilder<ParseObject> query =
+      QueryBuilder<ParseObject>(ParseObject(LevelEntity.className));
+  return await ref.read(levelRepositoryProvider).list(query: query);
 }

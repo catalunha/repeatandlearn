@@ -12,10 +12,10 @@ class LevelEntity {
   static const String isActive = 'isActive';
   static const String tasks = 'tasks';
 
-  LevelModel fromParse(ParseObject parseObject) {
-    LevelModel profileModel = LevelModel(
+  LevelModel toModel(ParseObject parseObject) {
+    LevelModel model = LevelModel(
       id: parseObject.objectId!,
-      image: parseObject.get(LevelEntity.image).get<String>('url'),
+      image: parseObject.get(LevelEntity.image)?.get<String>('url'),
       title: parseObject.get<String>(LevelEntity.title)!,
       description: parseObject.get<String>(LevelEntity.description)!,
       isActive: parseObject.get<bool>(LevelEntity.isActive)!,
@@ -26,17 +26,16 @@ class LevelEntity {
               .toList()
           : [],
     );
-    return profileModel;
+    return model;
   }
 
-  Future<ParseObject> toParse(LevelModel profileModel) async {
-    final profileParseObject = ParseObject(LevelEntity.className);
-    profileParseObject.objectId = profileModel.id;
-    profileParseObject.set<String>(LevelEntity.title, profileModel.title);
-    profileParseObject.set<String>(
-        LevelEntity.description, profileModel.description);
-    profileParseObject.set<bool>(LevelEntity.isActive, profileModel.isActive);
-    profileParseObject.set<List<String>>(LevelEntity.tasks, profileModel.tasks);
-    return profileParseObject;
+  Future<ParseObject> toParse(LevelModel model) async {
+    final parseObject = ParseObject(LevelEntity.className);
+    parseObject.objectId = model.id;
+    parseObject.set<String>(LevelEntity.title, model.title);
+    parseObject.set<String>(LevelEntity.description, model.description);
+    parseObject.set<bool>(LevelEntity.isActive, model.isActive);
+    parseObject.set<List<String>>(LevelEntity.tasks, model.tasks);
+    return parseObject;
   }
 }

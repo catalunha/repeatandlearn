@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../data/b4a/table/user_b4a.dart';
 import 'level_repository.dart';
+import 'task_repository.dart';
 
 part 'repositories_providers.g.dart';
 
@@ -20,4 +21,9 @@ UserProfileRepository userProfileRepository(UserProfileRepositoryRef ref) {
 @riverpod
 LevelRepository levelRepository(LevelRepositoryRef ref) {
   return LevelRepository();
+}
+
+@riverpod
+TaskRepository taskRepository(TaskRepositoryRef ref) {
+  return TaskRepository();
 }

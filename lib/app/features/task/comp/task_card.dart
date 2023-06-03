@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-import 'package:repeatandlearn/app/core/models/level_model.dart';
-import 'package:repeatandlearn/app/routes.dart';
-
+import '../../../core/models/task_model.dart';
 import '../../utils/app_photo_show.dart';
 
-class LevelCard extends StatelessWidget {
-  final LevelModel model;
-  const LevelCard({
+class TaskCard extends StatelessWidget {
+  final TaskModel model;
+
+  const TaskCard({
     Key? key,
     required this.model,
   }) : super(key: key);
@@ -23,9 +21,6 @@ class LevelCard extends StatelessWidget {
         ),
         title: Text(model.title),
         subtitle: Text(model.description),
-        onTap: () {
-          context.goNamed(AppPage.tasks.name, extra: model);
-        },
       ),
     );
   }

@@ -2,40 +2,33 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:repeatandlearn/app/core/authentication/riverpod/auth_prov.dart';
-import 'package:repeatandlearn/app/features/home/controller/providers.dart';
-import 'package:repeatandlearn/app/features/utils/app_mixin_loader.dart';
-import 'package:repeatandlearn/app/features/utils/app_mixin_messages.dart';
+import 'package:repeatandlearn/app/features/task/controller/providers.dart';
 
-import 'comp/home_popmenu.dart';
-import 'comp/level_card.dart';
+import '../../core/models/level_model.dart';
+import 'comp/task_card.dart';
 
-class HomePage extends ConsumerWidget with Loader, Messages {
-  HomePage({Key? key}) : super(key: key);
-
-  static Route<void> route() {
-    return MaterialPageRoute<void>(builder: (_) => HomePage());
-  }
+class TaskPage extends ConsumerWidget {
+  final LevelModel model;
+  const TaskPage({
+    super.key,
+    required this.model,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authChNotProvider);
-    final levelList = ref.watch(levelListProvider);
+    final taskList = ref.watch(taskListProvider(level: model));
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Olá ${auth.user?.userProfile?.name ?? auth.user?.email}',
+          'Level: ${model.title}',
         ),
-        actions: const [
-          HomePopMenu(),
-        ],
       ),
-      body: levelList.when(
+      body: taskList.when(
         data: (data) {
           return ListView.builder(
             itemCount: data.length,
             itemBuilder: (context, index) {
-              return LevelCard(
+              return TaskCard(
                 model: data[index],
               );
             },
