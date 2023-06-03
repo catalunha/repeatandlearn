@@ -1,18 +1,11 @@
-class Pagination {
-  int page = 1;
-  int limit = 1;
-  Pagination({this.page = 1, this.limit = 1});
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  @override
-  String toString() => 'Pagination(skip: $page, limit: $limit)';
+part 'pagination.freezed.dart';
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Pagination && other.page == page && other.limit == limit;
-  }
-
-  @override
-  int get hashCode => page.hashCode ^ limit.hashCode;
+@freezed
+abstract class Pagination with _$Pagination {
+  const factory Pagination({
+    @Default(1) int page,
+    @Default(100) int limit,
+  }) = _Pagination;
 }

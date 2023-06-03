@@ -17,8 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$LevelModel {
   String? get id => throw _privateConstructorUsedError;
-  String? get title => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  bool get isActive => throw _privateConstructorUsedError;
   List<String> get tasks => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -33,7 +35,12 @@ abstract class $LevelModelCopyWith<$Res> {
       _$LevelModelCopyWithImpl<$Res, LevelModel>;
   @useResult
   $Res call(
-      {String? id, String? title, String? description, List<String> tasks});
+      {String? id,
+      String? image,
+      String title,
+      String description,
+      bool isActive,
+      List<String> tasks});
 }
 
 /// @nodoc
@@ -50,8 +57,10 @@ class _$LevelModelCopyWithImpl<$Res, $Val extends LevelModel>
   @override
   $Res call({
     Object? id = freezed,
-    Object? title = freezed,
-    Object? description = freezed,
+    Object? image = freezed,
+    Object? title = null,
+    Object? description = null,
+    Object? isActive = null,
     Object? tasks = null,
   }) {
     return _then(_value.copyWith(
@@ -59,14 +68,22 @@ class _$LevelModelCopyWithImpl<$Res, $Val extends LevelModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      title: freezed == title
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
+              as String,
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
       tasks: null == tasks
           ? _value.tasks
           : tasks // ignore: cast_nullable_to_non_nullable
@@ -84,7 +101,12 @@ abstract class _$$_LevelModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? id, String? title, String? description, List<String> tasks});
+      {String? id,
+      String? image,
+      String title,
+      String description,
+      bool isActive,
+      List<String> tasks});
 }
 
 /// @nodoc
@@ -99,8 +121,10 @@ class __$$_LevelModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? title = freezed,
-    Object? description = freezed,
+    Object? image = freezed,
+    Object? title = null,
+    Object? description = null,
+    Object? isActive = null,
     Object? tasks = null,
   }) {
     return _then(_$_LevelModel(
@@ -108,14 +132,22 @@ class __$$_LevelModelCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      title: freezed == title
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
+              as String,
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
       tasks: null == tasks
           ? _value._tasks
           : tasks // ignore: cast_nullable_to_non_nullable
@@ -129,17 +161,24 @@ class __$$_LevelModelCopyWithImpl<$Res>
 class _$_LevelModel implements _LevelModel {
   _$_LevelModel(
       {this.id,
-      this.title,
-      this.description,
+      this.image,
+      required this.title,
+      required this.description,
+      this.isActive = true,
       final List<String> tasks = const []})
       : _tasks = tasks;
 
   @override
   final String? id;
   @override
-  final String? title;
+  final String? image;
   @override
-  final String? description;
+  final String title;
+  @override
+  final String description;
+  @override
+  @JsonKey()
+  final bool isActive;
   final List<String> _tasks;
   @override
   @JsonKey()
@@ -151,7 +190,7 @@ class _$_LevelModel implements _LevelModel {
 
   @override
   String toString() {
-    return 'LevelModel(id: $id, title: $title, description: $description, tasks: $tasks)';
+    return 'LevelModel(id: $id, image: $image, title: $title, description: $description, isActive: $isActive, tasks: $tasks)';
   }
 
   @override
@@ -160,15 +199,18 @@ class _$_LevelModel implements _LevelModel {
         (other.runtimeType == runtimeType &&
             other is _$_LevelModel &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.image, image) || other.image == image) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
             const DeepCollectionEquality().equals(other._tasks, _tasks));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description,
-      const DeepCollectionEquality().hash(_tasks));
+  int get hashCode => Object.hash(runtimeType, id, image, title, description,
+      isActive, const DeepCollectionEquality().hash(_tasks));
 
   @JsonKey(ignore: true)
   @override
@@ -180,16 +222,22 @@ class _$_LevelModel implements _LevelModel {
 abstract class _LevelModel implements LevelModel {
   factory _LevelModel(
       {final String? id,
-      final String? title,
-      final String? description,
+      final String? image,
+      required final String title,
+      required final String description,
+      final bool isActive,
       final List<String> tasks}) = _$_LevelModel;
 
   @override
   String? get id;
   @override
-  String? get title;
+  String? get image;
   @override
-  String? get description;
+  String get title;
+  @override
+  String get description;
+  @override
+  bool get isActive;
   @override
   List<String> get tasks;
   @override
