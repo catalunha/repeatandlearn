@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/models/task_model.dart';
 import '../../../routes.dart';
 import '../../utils/app_photo_show.dart';
+import '../controller/providers.dart';
 
-class TaskCard extends StatelessWidget {
+class TaskCard extends ConsumerWidget {
   final TaskModel model;
 
   const TaskCard({
@@ -14,7 +16,7 @@ class TaskCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Card(
       elevation: 10,
       child: ListTile(
@@ -24,8 +26,11 @@ class TaskCard extends StatelessWidget {
         title: Text(model.title),
         subtitle: Text(model.description),
         onTap: () {
-          context.goNamed(AppPage.calcs.name,
-              extra: {'level': model.level, 'task': model});
+          ref.read(taskSelectedProvider.notifier).setTask(model);
+
+          context.goNamed(
+            AppPage.calcStart.name,
+          );
         },
       ),
     );

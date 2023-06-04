@@ -4,23 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:repeatandlearn/app/features/task/controller/providers.dart';
 
-import '../../core/models/level_model.dart';
+import '../home/controller/providers.dart';
 import 'comp/task_card.dart';
 
 class TaskPage extends ConsumerWidget {
-  final LevelModel model;
   const TaskPage({
     super.key,
-    required this.model,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final taskList = ref.watch(taskListProvider(level: model));
+    final levelSelected = ref.watch(levelSelectedProvider)!;
+    final taskList = ref.watch(taskListProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Tasks of Level: ${model.title}',
+          'Tasks of Level: ${levelSelected.title}',
         ),
       ),
       body: taskList.when(
