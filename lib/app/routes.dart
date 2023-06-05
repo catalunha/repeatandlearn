@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 
 import 'core/authentication/riverpod/auth_prov.dart';
 import 'core/authentication/riverpod/auth_state.dart';
-import 'features/calc/calc_end_page.dart';
 import 'features/calc/calc_report_page.dart';
 import 'features/calc/calc_start_page.dart';
 import 'features/calc/calcs_page.dart';
@@ -100,44 +99,36 @@ final goRouterProv = Provider<GoRouter>(
               },
               routes: [
                 GoRoute(
-                    path: AppPage.calcStart.path,
-                    name: AppPage.calcStart.name,
-                    builder: (context, state) {
-                      return CalcStartPage(
-                        key: state.pageKey,
-                      );
-                    },
-                    routes: [
-                      GoRoute(
-                          path: AppPage.calcs.path,
-                          name: AppPage.calcs.name,
+                  path: AppPage.calcStart.path,
+                  name: AppPage.calcStart.name,
+                  builder: (context, state) {
+                    return CalcStartPage(
+                      key: state.pageKey,
+                    );
+                  },
+                  routes: [
+                    GoRoute(
+                      path: AppPage.calcs.path,
+                      name: AppPage.calcs.name,
+                      builder: (context, state) {
+                        return CalcsPage(
+                          key: state.pageKey,
+                        );
+                      },
+                      routes: [
+                        GoRoute(
+                          path: AppPage.calcReport.path,
+                          name: AppPage.calcReport.name,
                           builder: (context, state) {
-                            return CalcsPage(
+                            return CalcReportPage(
                               key: state.pageKey,
                             );
                           },
-                          routes: [
-                            GoRoute(
-                                path: AppPage.calcEnd.path,
-                                name: AppPage.calcEnd.name,
-                                builder: (context, state) {
-                                  return CalcEndPage(
-                                    key: state.pageKey,
-                                  );
-                                },
-                                routes: [
-                                  GoRoute(
-                                    path: AppPage.calcReport.path,
-                                    name: AppPage.calcReport.name,
-                                    builder: (context, state) {
-                                      return CalcReportPage(
-                                        key: state.pageKey,
-                                      );
-                                    },
-                                  )
-                                ]),
-                          ]),
-                    ]),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ],
             )
           ],
@@ -159,9 +150,8 @@ final goRouterProv = Provider<GoRouter>(
 /home/userProfile/edit
 /home/tasks
 /home/tasks/calcStart
-/home/tasks/calcStart/calcs/1...100
-/home/tasks/calcStart/calcs/calcEnd
-/home/tasks/calcStart/calcs/calcEnd/calcReport
+/home/tasks/calcStart/calcs[1...100]
+/home/tasks/calcStart/calcs/calcReport
 */
 
 enum AppPage {
@@ -173,7 +163,6 @@ enum AppPage {
   tasks('tasks', 'tasks'),
   calcStart('calcStart', 'calcStart'),
   calcs('calcs', 'calcs'),
-  calcEnd('calcEnd', 'calcEnd'),
   calcReport('calcReport', 'calcReport');
 
   final String path;

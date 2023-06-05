@@ -37,7 +37,7 @@ final canGoToIndexPreviousProvider = AutoDisposeProvider<bool>.internal(
 
 typedef CanGoToIndexPreviousRef = AutoDisposeProviderRef<bool>;
 String _$inLastIndexCurrentHash() =>
-    r'5272d477358963eb35f2cfcd46cd5d282147be22';
+    r'ef8d3b5d434ab7b1254d59d2ab9e7c8395f1e2cc';
 
 /// See also [inLastIndexCurrent].
 @ProviderFor(inLastIndexCurrent)
@@ -52,7 +52,7 @@ final inLastIndexCurrentProvider = AutoDisposeProvider<bool>.internal(
 );
 
 typedef InLastIndexCurrentRef = AutoDisposeProviderRef<bool>;
-String _$ansStudentHash() => r'9f45962ec7451074bc3391b36cbdc100a73f1891';
+String _$ansStudentHash() => r'c2312f6664c17df6c831e9be86bd1378d2761d3d';
 
 /// See also [AnsStudent].
 @ProviderFor(AnsStudent)
@@ -66,7 +66,7 @@ final ansStudentProvider = NotifierProvider<AnsStudent, String>.internal(
 );
 
 typedef _$AnsStudent = Notifier<String>;
-String _$indexCurrentHash() => r'247667f2e71e49539956f5f061c04fe1e25a4e80';
+String _$indexCurrentHash() => r'34ff0cdd66c5b6d4b08768c64594b1531328c056';
 
 /// See also [IndexCurrent].
 @ProviderFor(IndexCurrent)
@@ -80,7 +80,7 @@ final indexCurrentProvider = NotifierProvider<IndexCurrent, int>.internal(
 );
 
 typedef _$IndexCurrent = Notifier<int>;
-String _$calcsListHash() => r'35b12b6fda4b0e5440461a4b686b6fdfe6b75469';
+String _$calcsListHash() => r'efb61c6a1561a35d4cbeaf3e75b8982a540b8797';
 
 /// See also [CalcsList].
 @ProviderFor(CalcsList)
@@ -95,4 +95,20 @@ final calcsListProvider =
 );
 
 typedef _$CalcsList = Notifier<List<CalcType01>>;
+String _$timerResolutionHash() => r'84b8c6e99ba06765b8165ab6a81352e1e73c40e8';
+
+/// See also [TimerResolution].
+@ProviderFor(TimerResolution)
+final timerResolutionProvider =
+    NotifierProvider<TimerResolution, TimerResolutionState>.internal(
+  TimerResolution.new,
+  name: r'timerResolutionProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$timerResolutionHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$TimerResolution = Notifier<TimerResolutionState>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

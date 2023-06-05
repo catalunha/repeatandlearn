@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:core';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
@@ -12,6 +13,7 @@ import '../../../data/b4a/entity/calc_entity.dart';
 import '../../../data/b4a/entity/level_entity.dart';
 import '../../../data/b4a/entity/task_entity.dart';
 import '../../task/controller/providers.dart';
+import 'states.dart';
 
 part 'providers.g.dart';
 
@@ -77,9 +79,10 @@ class AnsStudent extends _$AnsStudent {
   void toggleSignal() {
     if (state.isNotEmpty) {
       if (state[0] == '-') {
-        state = state.replaceFirst('-', '+');
-      } else if (state[0] == '+') {
-        state = state.replaceFirst('+', '-');
+        state = state.replaceFirst('-', '');
+        // } else if (state[0] != '+') {
+        //   // state = state.replaceFirst('+', '-');
+        //   state = '-$state';
       } else {
         state = '-$state';
       }
@@ -110,20 +113,16 @@ class IndexCurrent extends _$IndexCurrent {
   }
 
   void next() {
-    final indexEnd = ref.watch(indexEndProvider);
-    final list = ref.read(calcsListProvider);
-    log('$list', name: 'next calcsListProvider');
-          final isCorrectAnsStudent =
-          ref.read(calcsListProvider.notifier).setAnsStudent(state);
-      ref.read(conversionOkProvider.notifier).state = isCorrectAnsStudent;
+    final indexEnd = ref.read(indexEndProvider);
+    final isCorrectAnsStudent =
+        ref.read(calcsListProvider.notifier).setAnsStudent(state);
+    ref.read(conversionOkProvider.notifier).state = isCorrectAnsStudent;
     if (state < (indexEnd - 1) && isCorrectAnsStudent) {
-
       state = state + 1;
       ref.read(conversionOkProvider.notifier).state = true;
       final ansStudent =
           ref.read(calcsListProvider.notifier).getAnsStudent(state);
-      log('IndexCurrent: $state');
-      log('next ansStudent: $ansStudent');
+      // log('IndexCurrent: $state');
       ref.read(ansStudentProvider.notifier).update(ansStudent ?? '');
     }
   }
@@ -136,7 +135,7 @@ bool canGoToIndexPrevious(CanGoToIndexPreviousRef ref) {
 
 @riverpod
 bool inLastIndexCurrent(CanGoToIndexPreviousRef ref) {
-  final indexEnd = ref.watch(indexEndProvider);
+  final indexEnd = ref.read(indexEndProvider);
 
   return ref.watch(indexCurrentProvider) == (indexEnd - 1);
 }
@@ -154,22 +153,18 @@ class CalcsList extends _$CalcsList {
   }
 
   String getNum1(int index) {
-    // final indexCurr = ref.watch(indexCurrentProvider);
     return state[index].num1.toStringOrigin();
   }
 
   String getNum2(int index) {
-    // final indexCurr = ref.watch(indexCurrentProvider);
     return state[index].num2.toStringOrigin();
   }
 
   // Type01Operator getOperator() {
-  //   // final indexCurr = ref.watch(indexCurrentProvider);
   //   return state[indexCurr].operator;
   // }
 
   String getOperatorString(int index) {
-    // final indexCurr = ref.watch(indexCurrentProvider);
     return switch (state[index].operator) {
       Type01Operator.sum => '+',
       Type01Operator.subtraction => '-',
@@ -179,12 +174,10 @@ class CalcsList extends _$CalcsList {
   }
 
   String getAnsCalc(int index) {
-    // final indexCurr = ref.watch(indexCurrentProvider);
     return state[index].ansCalc.toStringOrigin();
   }
 
   String? getAnsStudent(int index) {
-    // final indexCurr = ref.watch(indexCurrentProvider);
     return state[index].ansStudent?.toStringOrigin();
   }
 
@@ -193,8 +186,6 @@ class CalcsList extends _$CalcsList {
     if (ansStudentString.isNotEmpty) {
       NumberQ? ansStudent = NumberQ.parse(ansStudentString);
       if (ansStudent != null) {
-        // final indexCurr = ref.watch(indexCurrentProvider);
-        // print(state);
         state[index] = state[index].copyWith(ansStudent: ansStudent);
         return true;
       } else {
@@ -205,11 +196,59 @@ class CalcsList extends _$CalcsList {
     }
   }
 
-  // String ansStudentToString() {
-  //   final indexCurr = ref.watch(indexCurrentProvider);
-  //   final ansStudent = state[indexCurr].ansStudent;
-  //   final ansStudentString = ref.watch(ansStudentProvider.notifier).state =
-  //       ansStudent?.toStringOrigin() ?? '';
-  //   return ansStudentString;
-  // }
+  int countSolved() {
+    int countSolved = 0;
+    for (var item in state) {
+      if (item.ansCalc.isEqualsThe(item.ansStudent)) {
+        countSolved++;
+      }
+    }
+    return countSolved;
+  }
+
+  String rating() {
+    int countSolved = 0;
+    for (var item in state) {
+      if (item.ansCalc.isEqualsThe(item.ansStudent)) {
+        countSolved++;
+      }
+    }
+    double points = countSolved / state.length;
+    String rating = 'E';
+    if (points > 0.999) {
+      rating = 'A';
+    } else if (points > 0.9) {
+      rating = 'B';
+    } else if (points > 0.8) {
+      rating = 'C';
+    } else if (points > 0.7) {
+      rating = 'D';
+    }
+    return rating;
+  }
+}
+
+@Riverpod(keepAlive: true)
+class TimerResolution extends _$TimerResolution {
+  @override
+  TimerResolutionState build() {
+    return TimerResolutionState();
+  }
+
+  void startResolution() {
+    state = state.copyWith(start: DateTime.now());
+  }
+
+  void stopResolution() {
+    state = state.copyWith(end: DateTime.now());
+  }
+
+  int? diference() {
+    if (state.start != null && state.end != null) {
+      Duration diff = state.end!.difference(state.start!);
+      return diff.inMinutes;
+    } else {
+      return null;
+    }
+  }
 }

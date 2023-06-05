@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:repeatandlearn/app/features/calc/controller/providers.dart';
+
+import '../../../routes.dart';
 
 class CalcsBottons extends ConsumerWidget {
   const CalcsBottons({Key? key}) : super(key: key);
@@ -45,12 +48,19 @@ class CalcsBottons extends ConsumerWidget {
             ? SizedBox(
                 width: 240,
                 child: ElevatedButton(
-                  onPressed: canGoToIndexPrevious ? () {} : null,
+                  onPressed: canGoToIndexPrevious
+                      ? () {
+                          ref
+                              .read(timerResolutionProvider.notifier)
+                              .stopResolution();
+                          context.goNamed(AppPage.calcReport.name);
+                        }
+                      : null,
                   child: const Text('finish'),
                 ),
               )
             : const SizedBox.shrink(),
-        Text('indexCurrent: $indexCurrent'),
+        Text('Tarefa: $indexCurrent'),
       ],
     );
   }

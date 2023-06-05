@@ -13,6 +13,15 @@ extension ToMap on Type01Operator {
       Type01Operator.division => Type01Operator.division.name,
     };
   }
+
+  String get toSymbol {
+    return switch (this) {
+      Type01Operator.sum => '+',
+      Type01Operator.subtraction => '-',
+      Type01Operator.multiply => '*',
+      Type01Operator.division => '/',
+    };
+  }
 }
 
 extension FromMap on String {

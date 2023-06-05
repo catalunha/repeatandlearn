@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:repeatandlearn/app/core/authentication/riverpod/auth_prov.dart';
 
 import '../../routes.dart';
 import '../task/controller/providers.dart';
@@ -20,7 +19,6 @@ class CalcStartPage extends ConsumerWidget {
     final taskSelected = ref.watch(taskSelectedProvider)!;
 
     final calcList = ref.watch(calcListProvider);
-    final auth = ref.watch(authChNotProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -33,17 +31,20 @@ class CalcStartPage extends ConsumerWidget {
             children: [
               Text('Level: ${taskSelected.level.title}'),
               Text('Task: ${taskSelected.title}'),
-              Text(
-                  'Parabens, ${auth.user?.userProfile?.name ?? auth.user!.userProfile!.email}'),
+              const Text('Parabens,'),
               const Text(
-                  'Mais uma etapa do reforço de seu aprendizado esta pronto'),
+                  'Você decidiu iniciar mais uma etapa do reforço de seu aprendizado, e tudo esta pronto pra começarmos.'),
               const Text(
-                  'Prapare seu ambiente de aprendizado com papel, lapis e borracha. E as vezes uma regua geométrica.'),
+                  'Prepare seu ambiente de aprendizado com papel, lapis e borracha. E as vezes uma regua geométrica.'),
               const Text(
                   'Lembre-se que ao começar seu tempo de desevolvimento será contato e não desista.'),
               const Text('Então pra começar clique no botão a seguir.'),
               ElevatedButton(
                   onPressed: () {
+                    //resetando vários profiders
+                    ref
+                        .read(timerResolutionProvider.notifier)
+                        .startResolution();
                     context.goNamed(AppPage.calcs.name);
                   },
                   child: const Text('Iniciar aprendizado')),

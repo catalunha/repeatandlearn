@@ -35,7 +35,10 @@ class NumberQ {
     calculeInDouble();
   }
 
-  bool isEqualsThe(NumberQ num2) {
+  bool isEqualsThe(NumberQ? num2) {
+    if (num2 == null) {
+      return false;
+    }
     if (type != num2.type) {
       return false;
     }
@@ -310,7 +313,7 @@ class NumberQ {
 
   String get signalSymbol {
     if (signal == NumberQSignal.positive) {
-      return '+';
+      return '';
     } else {
       return '-';
     }

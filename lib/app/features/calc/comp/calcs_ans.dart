@@ -9,6 +9,9 @@ class CalcsAns extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ans = ref.watch(ansStudentProvider);
-    return Text(ans);
+    return Text(
+      ans,
+      style: const TextStyle(fontSize: 70),
+    );
   }
 }
