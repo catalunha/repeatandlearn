@@ -1,14 +1,15 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:repeatandlearn/app/features/calc/calcs_page.dart';
 
 import 'core/authentication/riverpod/auth_prov.dart';
 import 'core/authentication/riverpod/auth_state.dart';
 import 'features/calc/calc_end_page.dart';
 import 'features/calc/calc_report_page.dart';
 import 'features/calc/calc_start_page.dart';
+import 'features/calc/calcs_page.dart';
 import 'features/error/error_page.dart';
 import 'features/home/home_page.dart';
 import 'features/splash/splash_page.dart';
@@ -17,10 +18,15 @@ import 'features/user/login/user_login_page.dart';
 import 'features/user/register/email/user_register_email.page.dart';
 import 'features/user_profile/edit/user_profile_edit_page.dart';
 
+final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
+final GlobalKey<NavigatorState> _shellNavigator =
+    GlobalKey(debugLabel: 'shell');
+
 final goRouterProv = Provider<GoRouter>(
   (ref) {
     final authChNotProvIR = ref.watch(authChNotProvider);
     return GoRouter(
+      navigatorKey: _rootNavigator,
       debugLogDiagnostics: true,
       initialLocation: AppPage.splash.path,
       refreshListenable: authChNotProvIR,
@@ -94,42 +100,44 @@ final goRouterProv = Provider<GoRouter>(
               },
               routes: [
                 GoRoute(
-                  path: AppPage.calcStart.path,
-                  name: AppPage.calcStart.name,
-                  builder: (context, state) {
-                    return CalcStartPage(
-                      key: state.pageKey,
-                    );
-                  },
-                  routes: const [],
-                ),
-                GoRoute(
-                  path: AppPage.calcs.path,
-                  name: AppPage.calcs.name,
-                  builder: (context, state) {
-                    return CalcsPage(
-                      key: state.pageKey,
-                    );
-                  },
-                ),
-                GoRoute(
-                  path: AppPage.calcEnd.path,
-                  name: AppPage.calcEnd.name,
-                  builder: (context, state) {
-                    return CalcEndPage(
-                      key: state.pageKey,
-                    );
-                  },
-                ),
-                GoRoute(
-                  path: AppPage.calcReport.path,
-                  name: AppPage.calcReport.name,
-                  builder: (context, state) {
-                    return CalcReportPage(
-                      key: state.pageKey,
-                    );
-                  },
-                )
+                    path: AppPage.calcStart.path,
+                    name: AppPage.calcStart.name,
+                    builder: (context, state) {
+                      return CalcStartPage(
+                        key: state.pageKey,
+                      );
+                    },
+                    routes: [
+                      GoRoute(
+                          path: AppPage.calcs.path,
+                          name: AppPage.calcs.name,
+                          builder: (context, state) {
+                            return CalcsPage(
+                              key: state.pageKey,
+                            );
+                          },
+                          routes: [
+                            GoRoute(
+                                path: AppPage.calcEnd.path,
+                                name: AppPage.calcEnd.name,
+                                builder: (context, state) {
+                                  return CalcEndPage(
+                                    key: state.pageKey,
+                                  );
+                                },
+                                routes: [
+                                  GoRoute(
+                                    path: AppPage.calcReport.path,
+                                    name: AppPage.calcReport.name,
+                                    builder: (context, state) {
+                                      return CalcReportPage(
+                                        key: state.pageKey,
+                                      );
+                                    },
+                                  )
+                                ]),
+                          ]),
+                    ]),
               ],
             )
           ],
@@ -151,9 +159,9 @@ final goRouterProv = Provider<GoRouter>(
 /home/userProfile/edit
 /home/tasks
 /home/tasks/calcStart
-/home/tasks/calcs/1...100
-/home/tasks/calcEnd
-/home/tasks/calcReport
+/home/tasks/calcStart/calcs/1...100
+/home/tasks/calcStart/calcs/calcEnd
+/home/tasks/calcStart/calcs/calcEnd/calcReport
 */
 
 enum AppPage {
