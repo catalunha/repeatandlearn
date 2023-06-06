@@ -38,6 +38,7 @@ FutureOr<List<CalcModel>> calcList(
           .toPointer());
   final calcListTemp =
       await ref.read(calcRepositoryProvider).list(query: query);
+
   ref.read(indexEndProvider.notifier).state = calcListTemp.length;
   List<CalcType01> calcType01Temp = [];
   for (var calc in calcListTemp) {

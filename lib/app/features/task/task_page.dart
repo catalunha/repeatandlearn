@@ -16,6 +16,7 @@ class TaskPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final levelSelected = ref.watch(levelSelectedProvider)!;
     final taskList = ref.watch(taskListProvider);
+    final userResponses = ref.watch(userResponseListProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -23,12 +24,36 @@ class TaskPage extends ConsumerWidget {
         ),
       ),
       body: taskList.when(
-        data: (data) {
-          return ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (context, index) {
-              return TaskCard(
-                model: data[index],
+        data: (dataTasks) {
+          return userResponses.when(
+            data: (dataUserResp) {
+              return ListView.builder(
+                itemCount: dataTasks.length,
+                itemBuilder: (context, index) {
+                  final task = dataTasks[index];
+                  final indexUserResp = dataUserResp
+                      .indexWhere((userResp) => userResp.task.id == task.id);
+                  return TaskCard(
+                    model: task,
+                    userResponseModel:
+                        indexUserResp >= 0 ? dataUserResp[indexUserResp] : null,
+                  );
+                },
+              );
+            },
+            error: (error, stackTrace) {
+              log('Erro em TaskPage build');
+              log('$error');
+              log('$stackTrace');
+              return const Center(
+                child: Text('Erro em buscar userResponse'),
+              );
+            },
+            loading: () {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.yellow,
+                ),
               );
             },
           );
@@ -38,7 +63,7 @@ class TaskPage extends ConsumerWidget {
           log('$error');
           log('$stackTrace');
           return const Center(
-            child: Text('Erro'),
+            child: Text('Erro em buscar tasks'),
           );
         },
         loading: () {

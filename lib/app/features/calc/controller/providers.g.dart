@@ -66,7 +66,7 @@ final ansStudentProvider = NotifierProvider<AnsStudent, String>.internal(
 );
 
 typedef _$AnsStudent = Notifier<String>;
-String _$indexCurrentHash() => r'1b2f2fc6d707552e34fe5fa76289ed2cf8cf2904';
+String _$indexCurrentHash() => r'071e42f0ec0304402886167b58707a496a9f77e3';
 
 /// See also [IndexCurrent].
 @ProviderFor(IndexCurrent)
@@ -80,7 +80,7 @@ final indexCurrentProvider = NotifierProvider<IndexCurrent, int>.internal(
 );
 
 typedef _$IndexCurrent = Notifier<int>;
-String _$calcsListHash() => r'2700d91b89c8007f5ba0aa1e6a28824c720611ac';
+String _$calcsListHash() => r'79f3aa0d8e4d5fae75a45345a17bd27a2df8653e';
 
 /// See also [CalcsList].
 @ProviderFor(CalcsList)

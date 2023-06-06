@@ -35,7 +35,8 @@ class UserResponseEntity {
     parseObject.objectId = model.id;
     parseObject.set(
         UserResponseEntity.userProfile,
-        (ParseObject(UserProfileEntity.className)..objectId = model.level.id)
+        (ParseObject(UserProfileEntity.className)
+              ..objectId = model.userProfile.id)
             .toPointer());
     parseObject.set(
         UserResponseEntity.level,

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:repeatandlearn/app/core/NumberQ/calc_type_01.dart';
 
 import '../../routes.dart';
+import '../task/controller/providers.dart';
 import '../utils/app_mixin_loader.dart';
 import '../utils/app_mixin_messages.dart';
 import 'controller/providers.dart';
@@ -21,6 +22,12 @@ class CalcReportPage extends ConsumerWidget with Loader, Messages {
       }
       if (next == RegisterStatus.success) {
         hideLoader(context);
+        // ref.refresh(userResponseListProvider);
+        ref.invalidate(userResponseListProvider);
+        ref.invalidate(calcListProvider);
+        ref.invalidate(ansStudentProvider);
+        ref.invalidate(indexCurrentProvider);
+        ref.invalidate(timerResolutionProvider);
         context.goNamed(AppPage.tasks.name);
       }
       if (next == RegisterStatus.loading) {
