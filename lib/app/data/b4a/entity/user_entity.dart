@@ -15,7 +15,7 @@ class UserEntity {
       id: parseUser.objectId!,
       email: parseUser.get(UserEntity.email),
       userProfile: parseUser.get(UserEntity.userProfile) != null
-          ? UserProfileEntity().fromParse(parseUser.get(UserEntity.userProfile))
+          ? UserProfileEntity().toModel(parseUser.get(UserEntity.userProfile))
           : null,
     );
   }

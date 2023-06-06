@@ -66,7 +66,7 @@ final ansStudentProvider = NotifierProvider<AnsStudent, String>.internal(
 );
 
 typedef _$AnsStudent = Notifier<String>;
-String _$indexCurrentHash() => r'34ff0cdd66c5b6d4b08768c64594b1531328c056';
+String _$indexCurrentHash() => r'1b2f2fc6d707552e34fe5fa76289ed2cf8cf2904';
 
 /// See also [IndexCurrent].
 @ProviderFor(IndexCurrent)
@@ -80,7 +80,7 @@ final indexCurrentProvider = NotifierProvider<IndexCurrent, int>.internal(
 );
 
 typedef _$IndexCurrent = Notifier<int>;
-String _$calcsListHash() => r'efb61c6a1561a35d4cbeaf3e75b8982a540b8797';
+String _$calcsListHash() => r'2700d91b89c8007f5ba0aa1e6a28824c720611ac';
 
 /// See also [CalcsList].
 @ProviderFor(CalcsList)
@@ -95,7 +95,7 @@ final calcsListProvider =
 );
 
 typedef _$CalcsList = Notifier<List<CalcType01>>;
-String _$timerResolutionHash() => r'84b8c6e99ba06765b8165ab6a81352e1e73c40e8';
+String _$timerResolutionHash() => r'633474454ff8133fa9e7fe2b1ea43f3c56af8088';
 
 /// See also [TimerResolution].
 @ProviderFor(TimerResolution)
@@ -111,4 +111,20 @@ final timerResolutionProvider =
 );
 
 typedef _$TimerResolution = Notifier<TimerResolutionState>;
+String _$registerTrainingHash() => r'7fd4c698480110f9fc7cf0aaaf66f5c69f7484cb';
+
+/// See also [RegisterTraining].
+@ProviderFor(RegisterTraining)
+final registerTrainingProvider =
+    AutoDisposeNotifierProvider<RegisterTraining, bool>.internal(
+  RegisterTraining.new,
+  name: r'registerTrainingProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$registerTrainingHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$RegisterTraining = AutoDisposeNotifier<bool>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

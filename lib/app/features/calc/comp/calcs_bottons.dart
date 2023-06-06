@@ -50,10 +50,15 @@ class CalcsBottons extends ConsumerWidget {
                 child: ElevatedButton(
                   onPressed: canGoToIndexPrevious
                       ? () {
-                          ref
-                              .read(timerResolutionProvider.notifier)
-                              .stopResolution();
-                          context.goNamed(AppPage.calcReport.name);
+                          final isCorrectAnsStudent = ref
+                              .read(indexCurrentProvider.notifier)
+                              .beforeUpdateState();
+                          if (isCorrectAnsStudent) {
+                            ref
+                                .read(timerResolutionProvider.notifier)
+                                .stopResolution();
+                            context.goNamed(AppPage.calcReport.name);
+                          }
                         }
                       : null,
                   child: const Text('finish'),

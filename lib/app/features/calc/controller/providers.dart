@@ -3,12 +3,15 @@ import 'dart:core';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:repeatandlearn/app/core/authentication/riverpod/auth_prov.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/NumberQ/calc_type_01.dart';
 import '../../../core/NumberQ/number_q.dart';
 import '../../../core/models/calc_model.dart';
+import '../../../core/models/user_response_model.dart';
 import '../../../core/repositories/repositories_providers.dart';
+import '../../../data/b4a/b4a_exception.dart';
 import '../../../data/b4a/entity/calc_entity.dart';
 import '../../../data/b4a/entity/level_entity.dart';
 import '../../../data/b4a/entity/task_entity.dart';
@@ -100,31 +103,49 @@ class IndexCurrent extends _$IndexCurrent {
   }
 
   void previous() {
-    if (state > 0) {
-      final isCorrectAnsStudent =
-          ref.read(calcsListProvider.notifier).setAnsStudent(state);
-      ref.read(conversionOkProvider.notifier).state = isCorrectAnsStudent;
+    final isCorrectAnsStudent = beforeUpdateState();
+    //     ref.read(calcsListProvider.notifier).setAnsStudent(state);
+    // ref.read(conversionOkProvider.notifier).state = isCorrectAnsStudent;
+    if (state > 0 && isCorrectAnsStudent) {
       state = state - 1;
-      ref.read(conversionOkProvider.notifier).state = true;
-      final ansStudent =
-          ref.read(calcsListProvider.notifier).getAnsStudent(state);
-      ref.read(ansStudentProvider.notifier).update(ansStudent ?? '');
+      afterUpdateState();
+
+      // ref.read(conversionOkProvider.notifier).state = true;
+      // final ansStudent =
+      //     ref.read(calcsListProvider.notifier).getAnsStudent(state);
+      // ref.read(ansStudentProvider.notifier).update(ansStudent ?? '');
     }
+    ref.read(conversionOkProvider.notifier).state = true;
   }
 
   void next() {
     final indexEnd = ref.read(indexEndProvider);
+    final isCorrectAnsStudent = beforeUpdateState();
+    //     ref.read(calcsListProvider.notifier).setAnsStudent(state);
+    // ref.read(conversionOkProvider.notifier).state = isCorrectAnsStudent;
+    if (state < (indexEnd - 1) && isCorrectAnsStudent) {
+      state = state + 1;
+      afterUpdateState();
+      // ref.read(conversionOkProvider.notifier).state = true;
+      // final ansStudent =
+      //     ref.read(calcsListProvider.notifier).getAnsStudent(state);
+      // ref.read(ansStudentProvider.notifier).update(ansStudent ?? '');
+    }
+    ref.read(conversionOkProvider.notifier).state = true;
+  }
+
+  bool beforeUpdateState() {
     final isCorrectAnsStudent =
         ref.read(calcsListProvider.notifier).setAnsStudent(state);
     ref.read(conversionOkProvider.notifier).state = isCorrectAnsStudent;
-    if (state < (indexEnd - 1) && isCorrectAnsStudent) {
-      state = state + 1;
-      ref.read(conversionOkProvider.notifier).state = true;
-      final ansStudent =
-          ref.read(calcsListProvider.notifier).getAnsStudent(state);
-      // log('IndexCurrent: $state');
-      ref.read(ansStudentProvider.notifier).update(ansStudent ?? '');
-    }
+    return isCorrectAnsStudent;
+  }
+
+  void afterUpdateState() {
+    ref.read(conversionOkProvider.notifier).state = true;
+    final ansStudent =
+        ref.read(calcsListProvider.notifier).getAnsStudent(state);
+    ref.read(ansStudentProvider.notifier).update(ansStudent ?? '');
   }
 }
 
@@ -183,6 +204,8 @@ class CalcsList extends _$CalcsList {
 
   bool setAnsStudent(int index) {
     final ansStudentString = ref.read(ansStudentProvider);
+    ref.read(ansStudentProvider.notifier).update('');
+
     if (ansStudentString.isNotEmpty) {
       NumberQ? ansStudent = NumberQ.parse(ansStudentString);
       if (ansStudent != null) {
@@ -192,6 +215,7 @@ class CalcsList extends _$CalcsList {
         return false;
       }
     } else {
+      state[index] = state[index].copyWith(ansStudent: null);
       return true;
     }
   }
@@ -241,14 +265,59 @@ class TimerResolution extends _$TimerResolution {
 
   void stopResolution() {
     state = state.copyWith(end: DateTime.now());
+    _diference();
   }
 
-  int? diference() {
-    if (state.start != null && state.end != null) {
-      Duration diff = state.end!.difference(state.start!);
-      return diff.inMinutes;
-    } else {
-      return null;
+  void _diference() {
+    // if (state.start != null && state.end != null) {
+    Duration diff = state.end!.difference(state.start!);
+    // return diff.inMinutes;
+    state = state.copyWith(diference: diff.inMinutes);
+
+    // } else {
+    //   return null;
+    // }
+  }
+}
+
+final registerStatusProvider =
+    StateProvider.autoDispose<RegisterStatus>((ref) => RegisterStatus.initial);
+
+@riverpod
+class RegisterTraining extends _$RegisterTraining {
+  @override
+  bool build() {
+    return true;
+  }
+
+  Future<void> register() async {
+    ref.read(registerStatusProvider.notifier).state = RegisterStatus.loading;
+    try {
+      final userResponseRepository = ref.read(userResponseRepositoryProvider);
+      final taskSelected = ref.watch(taskSelectedProvider)!;
+      final auth = ref.read(authChNotProvider);
+      final timer = ref.read(timerResolutionProvider);
+      await userResponseRepository.update(
+        UserResponseModel(
+          userProfile: auth.user!.userProfile!,
+          level: taskSelected.level,
+          task: taskSelected,
+          startIn: timer.start!,
+          minutes: timer.diference!,
+          rating: ref.read(calcsListProvider.notifier).rating(),
+        ),
+        taskSelected.id!,
+      );
+      ref.read(registerStatusProvider.notifier).state = RegisterStatus.success;
+    } on B4aException catch (e, st) {
+      // ref.read(userLoginErrorProvider.notifier).state = e.message;
+      ref.read(registerStatusProvider.notifier).state = RegisterStatus.error;
+      log('$st');
+    } catch (e, st) {
+      // ref.read(userLoginErrorProvider.notifier).state =
+      //     'Erro desconhecido no login.';
+      ref.read(registerStatusProvider.notifier).state = RegisterStatus.error;
+      log('$st');
     }
   }
 }

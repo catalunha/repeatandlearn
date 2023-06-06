@@ -19,23 +19,24 @@ class CalcsPage extends ConsumerWidget with Messages {
             'Valor com erro. Corrija ou limpe tudo. Antes de prosseguir');
       }
     });
-
+    final ans = ref.watch(ansStudentProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Calcs'),
         // automaticallyImplyLeading: false,
         // leading: null,
       ),
-      body: const Center(
+      body: Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CalcsCalc(),
-              CalcsAns(),
-              CalcsKeyboard(),
-              CalcsBottons()
+              const CalcsCalc(),
+              const CalcsAns(),
+              const CalcsKeyboard(),
+              const CalcsBottons(),
+              Text(ans)
             ],
           ),
         ),

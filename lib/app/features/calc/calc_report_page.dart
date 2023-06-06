@@ -1,19 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:repeatandlearn/app/core/NumberQ/calc_type_01.dart';
 
+import '../../routes.dart';
+import '../utils/app_mixin_loader.dart';
+import '../utils/app_mixin_messages.dart';
 import 'controller/providers.dart';
+import 'controller/states.dart';
 
-class CalcReportPage extends ConsumerWidget {
-  const CalcReportPage({Key? key}) : super(key: key);
+class CalcReportPage extends ConsumerWidget with Loader, Messages {
+  CalcReportPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<RegisterStatus>(registerStatusProvider, (prev, next) {
+      if (next == RegisterStatus.error) {
+        hideLoader(context);
+        showMessageError(context, 'Erro em registrar treinamento');
+      }
+      if (next == RegisterStatus.success) {
+        hideLoader(context);
+        context.goNamed(AppPage.tasks.name);
+      }
+      if (next == RegisterStatus.loading) {
+        showLoader(context);
+      }
+    });
     final calcsList = ref.read(calcsListProvider);
     final rating = ref.read(calcsListProvider.notifier).rating();
     final timerResolution = ref.read(timerResolutionProvider);
-    final diffTimerResolution =
-        ref.read(timerResolutionProvider.notifier).diference();
     return Scaffold(
       appBar: AppBar(
         title: const Text('CalcsReport'),
@@ -22,7 +38,8 @@ class CalcReportPage extends ConsumerWidget {
         children: [
           Text('Seu nivel é: $rating'),
           Text('Você iniciou o treinamento em: ${timerResolution.start}'),
-          Text('Com tempo de resolução de : $diffTimerResolution minutos'),
+          Text(
+              'Com tempo de resolução de : ${timerResolution.diference} minutos'),
           // Flexible(
           //   child: ListView.builder(
           //     itemCount: calcsList.length,
@@ -71,11 +88,15 @@ class CalcReportPage extends ConsumerWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              ref.read(registerTrainingProvider.notifier).register();
+            },
             child: const Text('Registrar treinamento'),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              context.goNamed(AppPage.tasks.name);
+            },
             child: const Text('Escolher outra tarefa'),
           ),
         ],

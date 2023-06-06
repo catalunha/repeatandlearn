@@ -14,6 +14,8 @@ part 'states.freezed.dart';
 
 @freezed
 abstract class TimerResolutionState with _$TimerResolutionState {
-  factory TimerResolutionState({DateTime? start, DateTime? end}) =
-      _TimerResolutionState;
+  factory TimerResolutionState(
+      {DateTime? start, DateTime? end, int? diference}) = _TimerResolutionState;
 }
+
+enum RegisterStatus { initial, loading, success, error }

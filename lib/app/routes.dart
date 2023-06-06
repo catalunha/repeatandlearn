@@ -115,17 +115,15 @@ final goRouterProv = Provider<GoRouter>(
                           key: state.pageKey,
                         );
                       },
-                      routes: [
-                        GoRoute(
-                          path: AppPage.calcReport.path,
-                          name: AppPage.calcReport.name,
-                          builder: (context, state) {
-                            return CalcReportPage(
-                              key: state.pageKey,
-                            );
-                          },
-                        ),
-                      ],
+                    ),
+                    GoRoute(
+                      path: AppPage.calcReport.path,
+                      name: AppPage.calcReport.name,
+                      builder: (context, state) {
+                        return CalcReportPage(
+                          key: state.pageKey,
+                        );
+                      },
                     ),
                   ],
                 ),
