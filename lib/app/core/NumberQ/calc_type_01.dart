@@ -56,13 +56,14 @@ class CalcType01 {
     Type01Operator? operator,
     NumberQ? ansCalc,
     NumberQ? ansStudent,
+    bool ansStudentSetNull = false,
   }) {
     return CalcType01(
       num1: num1 ?? this.num1,
       num2: num2 ?? this.num2,
       operator: operator ?? this.operator,
       ansCalc: ansCalc ?? this.ansCalc,
-      ansStudent: ansStudent ?? this.ansStudent,
+      ansStudent: ansStudentSetNull ? null : ansStudent ?? this.ansStudent,
     );
   }
 

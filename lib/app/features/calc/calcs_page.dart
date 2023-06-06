@@ -36,7 +36,7 @@ class CalcsPage extends ConsumerWidget with Messages {
               const CalcsAns(),
               const CalcsKeyboard(),
               const CalcsBottons(),
-              Text(ans)
+              Text('->$ans<-')
             ],
           ),
         ),

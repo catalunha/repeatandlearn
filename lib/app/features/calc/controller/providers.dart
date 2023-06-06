@@ -103,33 +103,35 @@ class IndexCurrent extends _$IndexCurrent {
   }
 
   void previous() {
-    final isCorrectAnsStudent = beforeUpdateState();
-    //     ref.read(calcsListProvider.notifier).setAnsStudent(state);
-    // ref.read(conversionOkProvider.notifier).state = isCorrectAnsStudent;
+    // final isCorrectAnsStudent = beforeUpdateState();
+    final isCorrectAnsStudent =
+        ref.read(calcsListProvider.notifier).setAnsStudent(state);
+    ref.read(conversionOkProvider.notifier).state = isCorrectAnsStudent;
     if (state > 0 && isCorrectAnsStudent) {
       state = state - 1;
       afterUpdateState();
 
-      // ref.read(conversionOkProvider.notifier).state = true;
-      // final ansStudent =
-      //     ref.read(calcsListProvider.notifier).getAnsStudent(state);
-      // ref.read(ansStudentProvider.notifier).update(ansStudent ?? '');
+      ref.read(conversionOkProvider.notifier).state = true;
+      final ansStudent =
+          ref.read(calcsListProvider.notifier).getAnsStudent(state);
+      ref.read(ansStudentProvider.notifier).update(ansStudent ?? '');
     }
     ref.read(conversionOkProvider.notifier).state = true;
   }
 
   void next() {
     final indexEnd = ref.read(indexEndProvider);
-    final isCorrectAnsStudent = beforeUpdateState();
-    //     ref.read(calcsListProvider.notifier).setAnsStudent(state);
-    // ref.read(conversionOkProvider.notifier).state = isCorrectAnsStudent;
+    // final isCorrectAnsStudent = beforeUpdateState();
+    final isCorrectAnsStudent =
+        ref.read(calcsListProvider.notifier).setAnsStudent(state);
+    ref.read(conversionOkProvider.notifier).state = isCorrectAnsStudent;
     if (state < (indexEnd - 1) && isCorrectAnsStudent) {
       state = state + 1;
-      afterUpdateState();
-      // ref.read(conversionOkProvider.notifier).state = true;
-      // final ansStudent =
-      //     ref.read(calcsListProvider.notifier).getAnsStudent(state);
-      // ref.read(ansStudentProvider.notifier).update(ansStudent ?? '');
+      // afterUpdateState();
+      ref.read(conversionOkProvider.notifier).state = true;
+      final ansStudent =
+          ref.read(calcsListProvider.notifier).getAnsStudent(state);
+      ref.read(ansStudentProvider.notifier).update(ansStudent ?? '');
     }
     ref.read(conversionOkProvider.notifier).state = true;
   }
@@ -204,18 +206,21 @@ class CalcsList extends _$CalcsList {
 
   bool setAnsStudent(int index) {
     final ansStudentString = ref.read(ansStudentProvider);
+    log(ansStudentString);
     ref.read(ansStudentProvider.notifier).update('');
 
     if (ansStudentString.isNotEmpty) {
       NumberQ? ansStudent = NumberQ.parse(ansStudentString);
       if (ansStudent != null) {
+        log('$state');
         state[index] = state[index].copyWith(ansStudent: ansStudent);
+        log('$state');
         return true;
       } else {
         return false;
       }
     } else {
-      state[index] = state[index].copyWith(ansStudent: null);
+      state[index] = state[index].copyWith(ansStudentSetNull: true);
       return true;
     }
   }
