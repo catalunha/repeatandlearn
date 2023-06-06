@@ -27,7 +27,7 @@ class UserProfileB4a {
       List<UserProfileModel> listTemp = <UserProfileModel>[];
       if (response.success && response.results != null) {
         for (var element in response.results!) {
-          listTemp.add(UserProfileEntity().fromParse(element));
+          listTemp.add(UserProfileEntity().toModel(element));
         }
         return listTemp;
       } else {
@@ -52,7 +52,7 @@ class UserProfileB4a {
       var response = await query.query();
 
       if (response.success && response.results != null) {
-        return UserProfileEntity().fromParse(response.results!.first);
+        return UserProfileEntity().toModel(response.results!.first);
       }
       throw B4aException(
         'Perfil do usuário não encontrado.',

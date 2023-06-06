@@ -28,10 +28,10 @@ class ParseErrorTranslate {
   String code = '';
   String translated = '';
   decode() {
-    log('+++ +++ +++', name: 'ParseErrorCodes');
-    log('${parseError.code} - ${parseError.message} - ${parseError.type}',
+    //log('+++ +++ +++', name: 'ParseErrorCodes');
+    //log('${parseError.code} - ${parseError.message} - ${parseError.type}',
         name: 'ParseErrorCodes');
-    log('--- --- ---', name: 'ParseErrorCodes');
+    //log('--- --- ---', name: 'ParseErrorCodes');
     // if (_appCodes.containsKey(parseError.code)) {
     //   code = 'Parse Error: ${parseError.code}';
     //   // translated = _appCodes[parseError.code]!;

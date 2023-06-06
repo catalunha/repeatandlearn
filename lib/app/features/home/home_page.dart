@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:repeatandlearn/app/core/authentication/riverpod/auth_prov.dart';
@@ -42,9 +40,9 @@ class HomePage extends ConsumerWidget with Loader, Messages {
           );
         },
         error: (error, stackTrace) {
-          log('Erro em TaskPage build');
-          log('$error');
-          log('$stackTrace');
+          //log('Erro em TaskPage build');
+          //log('$error');
+          //log('$stackTrace');
           return const Center(
             child: Text('Erro'),
           );

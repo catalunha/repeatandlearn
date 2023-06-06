@@ -20,4 +20,20 @@ final levelListProvider = FutureProvider<List<LevelModel>>.internal(
 );
 
 typedef LevelListRef = FutureProviderRef<List<LevelModel>>;
+String _$levelSelectedHash() => r'709997525c0caa4dc5bad62a2f1d6bb4b1014d06';
+
+/// See also [LevelSelected].
+@ProviderFor(LevelSelected)
+final levelSelectedProvider =
+    NotifierProvider<LevelSelected, LevelModel?>.internal(
+  LevelSelected.new,
+  name: r'levelSelectedProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$levelSelectedHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$LevelSelected = Notifier<LevelModel?>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

@@ -13,3 +13,15 @@ FutureOr<List<LevelModel>> levelList(LevelListRef ref) async {
       QueryBuilder<ParseObject>(ParseObject(LevelEntity.className));
   return await ref.read(levelRepositoryProvider).list(query: query);
 }
+
+@Riverpod(keepAlive: true)
+class LevelSelected extends _$LevelSelected {
+  @override
+  LevelModel? build() {
+    return null;
+  }
+
+  setLevel(LevelModel model) {
+    state = model;
+  }
+}

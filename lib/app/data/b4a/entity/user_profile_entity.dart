@@ -10,7 +10,7 @@ class UserProfileEntity {
   static const String name = 'name';
   static const String isActive = 'isActive';
 
-  UserProfileModel fromParse(ParseObject parseObject) {
+  UserProfileModel toModel(ParseObject parseObject) {
     UserProfileModel profileModel = UserProfileModel(
       id: parseObject.objectId!,
       email: parseObject.get(UserProfileEntity.email),

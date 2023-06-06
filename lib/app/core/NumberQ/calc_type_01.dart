@@ -2,27 +2,36 @@ import 'dart:convert';
 
 import 'number_q.dart';
 
-enum Type1Operator { sum, subtraction, multiply, division }
+enum Type01Operator { sum, subtraction, multiply, division }
 
-extension ToMap on Type1Operator {
+extension ToMap on Type01Operator {
   String get toMap {
     return switch (this) {
-      Type1Operator.sum => Type1Operator.sum.name,
-      Type1Operator.subtraction => Type1Operator.subtraction.name,
-      Type1Operator.multiply => Type1Operator.multiply.name,
-      Type1Operator.division => Type1Operator.division.name,
+      Type01Operator.sum => Type01Operator.sum.name,
+      Type01Operator.subtraction => Type01Operator.subtraction.name,
+      Type01Operator.multiply => Type01Operator.multiply.name,
+      Type01Operator.division => Type01Operator.division.name,
+    };
+  }
+
+  String get toSymbol {
+    return switch (this) {
+      Type01Operator.sum => '+',
+      Type01Operator.subtraction => '-',
+      Type01Operator.multiply => '*',
+      Type01Operator.division => '/',
     };
   }
 }
 
 extension FromMap on String {
-  Type1Operator get fromMap {
+  Type01Operator get fromMap {
     return switch (this) {
-      'sum' => Type1Operator.sum,
-      'subtraction' => Type1Operator.subtraction,
-      'multiply' => Type1Operator.multiply,
-      'division' => Type1Operator.division,
-      _ => Type1Operator.sum,
+      'sum' => Type01Operator.sum,
+      'subtraction' => Type01Operator.subtraction,
+      'multiply' => Type01Operator.multiply,
+      'division' => Type01Operator.division,
+      _ => Type01Operator.sum,
     };
   }
 }
@@ -30,26 +39,31 @@ extension FromMap on String {
 class CalcType01 {
   final NumberQ num1;
   final NumberQ num2;
-  final Type1Operator operator;
-  final NumberQ ans;
+  final Type01Operator operator;
+  final NumberQ ansCalc;
+  final NumberQ? ansStudent;
   CalcType01({
     required this.num1,
     required this.num2,
     required this.operator,
-    required this.ans,
+    required this.ansCalc,
+    this.ansStudent,
   });
 
   CalcType01 copyWith({
     NumberQ? num1,
     NumberQ? num2,
-    Type1Operator? operator,
-    NumberQ? ans,
+    Type01Operator? operator,
+    NumberQ? ansCalc,
+    NumberQ? ansStudent,
+    bool ansStudentSetNull = false,
   }) {
     return CalcType01(
       num1: num1 ?? this.num1,
       num2: num2 ?? this.num2,
       operator: operator ?? this.operator,
-      ans: ans ?? this.ans,
+      ansCalc: ansCalc ?? this.ansCalc,
+      ansStudent: ansStudentSetNull ? null : ansStudent ?? this.ansStudent,
     );
   }
 
@@ -59,7 +73,7 @@ class CalcType01 {
     result.addAll({'num1': num1.toMap()});
     result.addAll({'num2': num2.toMap()});
     result.addAll({'operator': operator.toMap});
-    result.addAll({'ans': ans.toMap()});
+    result.addAll({'ans': ansCalc.toMap()});
 
     return result;
   }
@@ -69,7 +83,7 @@ class CalcType01 {
       num1: NumberQ.fromMap(map['num1']),
       num2: NumberQ.fromMap(map['num2']),
       operator: map['operator'].toString().fromMap,
-      ans: NumberQ.fromMap(map['ans']),
+      ansCalc: NumberQ.fromMap(map['ans']),
     );
   }
 
@@ -80,7 +94,7 @@ class CalcType01 {
 
   @override
   String toString() {
-    return 'Type1(num1: $num1, num2: $num2, operator: $operator, ans: $ans)';
+    return 'CalcType01(num1: $num1, num2: $num2, operator: $operator, ans: $ansCalc, response: $ansStudent)';
   }
 
   @override
@@ -91,11 +105,16 @@ class CalcType01 {
         other.num1 == num1 &&
         other.num2 == num2 &&
         other.operator == operator &&
-        other.ans == ans;
+        other.ansCalc == ansCalc &&
+        other.ansStudent == ansStudent;
   }
 
   @override
   int get hashCode {
-    return num1.hashCode ^ num2.hashCode ^ operator.hashCode ^ ans.hashCode;
+    return num1.hashCode ^
+        num2.hashCode ^
+        operator.hashCode ^
+        ansCalc.hashCode ^
+        ansStudent.hashCode;
   }
 }

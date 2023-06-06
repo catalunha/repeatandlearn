@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:repeatandlearn/app/core/models/level_model.dart';
 import 'package:repeatandlearn/app/routes.dart';
 
 import '../../utils/app_photo_show.dart';
+import '../controller/providers.dart';
 
-class LevelCard extends StatelessWidget {
+class LevelCard extends ConsumerWidget {
   final LevelModel model;
   const LevelCard({
     Key? key,
@@ -14,7 +16,7 @@ class LevelCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Card(
       elevation: 10,
       child: ListTile(
@@ -24,7 +26,8 @@ class LevelCard extends StatelessWidget {
         title: Text(model.title),
         subtitle: Text(model.description),
         onTap: () {
-          context.goNamed(AppPage.tasks.name, extra: {'level': model});
+          ref.read(levelSelectedProvider.notifier).setLevel(model);
+          context.goNamed(AppPage.tasks.name);
         },
       ),
     );

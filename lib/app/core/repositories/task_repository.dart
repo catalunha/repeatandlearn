@@ -7,7 +7,6 @@ import '../models/task_model.dart';
 class TaskRepository {
   final TaskB4a levelB4a = TaskB4a();
 
-  TaskRepository();
   Future<List<TaskModel>> list({
     required QueryBuilder<ParseObject> query,
     Pagination pagination = const Pagination(),

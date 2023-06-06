@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../data/b4a/b4a_exception.dart';
@@ -31,24 +29,27 @@ final authCheckFutProvider = FutureProvider<void>((ref) async {
   final InitBack4app initBack4app = InitBack4app();
   try {
     final bool initParse = await initBack4app.init();
-    log('+++ AuthenticationEventInitial 1');
+
+    ////log('+++ AuthenticationEventInitial 1');
     if (initParse) {
-      log('+++ AuthenticationEventInitial 2');
+      ////log('+++ AuthenticationEventInitial 2');
       final user = await userRepositoryProvIR.hasUserLogged();
-      log('+++ AuthenticationEventInitial 3');
+
+      ////log('+++ AuthenticationEventInitial 3');
       if (user != null) {
-        log('+++ AuthenticationEventInitial 4');
+        ////log('+++ AuthenticationEventInitial 4');
         if (user.userProfile?.isActive == true) {
-          log('+++ AuthenticationEventInitial 5');
+          ////log('+++ AuthenticationEventInitial 5');
           authChNotProvIR.user = user;
-          log('Já logado ${user.email}');
+
+          ////log('Já logado ${user.email}');
         } else {
-          log('+++ AuthenticationEventInitial 7');
+          ////log('+++ AuthenticationEventInitial 7');
           await userRepositoryProvIR.logout();
           authChNotProvIR.logout();
         }
       } else {
-        log('+++ AuthenticationEventInitial 6');
+        ////log('+++ AuthenticationEventInitial 6');
         authChNotProvIR.logout();
       }
     }
