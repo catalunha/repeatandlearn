@@ -137,12 +137,13 @@ class UserB4a {
   }
 
   Future<UserModel?> hasUserLogged() async {
-    log('+++ hasUserLogged');
+    ///log('+++ hasUserLogged');
     final parseUser = await ParseUser.currentUser() as ParseUser?;
     if (parseUser == null) {
       return null;
     }
-    log('Check session token is valid');
+
+    ///log('Check session token is valid');
     //Checks whether the user's session token is valid
     final ParseResponse? parseResponse =
         await ParseUser.getCurrentUserFromServer(parseUser.sessionToken!);

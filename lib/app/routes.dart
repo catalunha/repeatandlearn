@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -31,21 +29,21 @@ final goRouterProv = Provider<GoRouter>(
       refreshListenable: authChNotProvIR,
       redirect: (context, state) {
         final authStatus = authChNotProvIR.status;
-        log('+++ redirect');
-        log('state.location: ${state.location}');
-        log('authStatusStProvIR: $authStatus');
+        // //log('+++ redirect');
+        // //log('state.location: ${state.location}');
+        // //log('authStatusStProvIR: $authStatus');
         if (authStatus == AuthStatus.unauthenticated &&
             state.location != '/login/registerEmail') {
-          log('--- redirected 1 to login');
+          // //log('--- redirected 1 to login');
           return AppPage.login.path;
         }
         if (authStatus == AuthStatus.authenticated &&
             (state.location == AppPage.login.path ||
                 state.location == AppPage.splash.path)) {
-          log('--- redirected 2 to home');
+          // //log('--- redirected 2 to home');
           return AppPage.home.path;
         }
-        log('--- redirected 3 to ${state.location}');
+        // //log('--- redirected 3 to ${state.location}');
 
         return null;
       },

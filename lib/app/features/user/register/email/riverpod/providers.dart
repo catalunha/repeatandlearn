@@ -46,8 +46,8 @@ class UserRegisterEmailForm extends _$UserRegisterEmailForm {
       ref.read(userRegisterEmailErrorProvider.notifier).state = e.message;
       ref.read(userRegisterEmailStatusProvider.notifier).state =
           UserRegisterEmailStatus.error;
-    } catch (e, st) {
-      log('$st');
+    } catch (e) {
+      //log('$st');
       ref.read(userRegisterEmailErrorProvider.notifier).state =
           'Erro desconhecido em registrar seu cadastro';
       ref.read(userRegisterEmailStatusProvider.notifier).state =

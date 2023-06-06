@@ -168,7 +168,7 @@ bool inLastIndexCurrent(CanGoToIndexPreviousRef ref) {
 class CalcsList extends _$CalcsList {
   @override
   List<CalcType01> build() {
-    log('CalcsList build');
+    //log('CalcsList build');
     return [];
   }
 
@@ -207,15 +207,15 @@ class CalcsList extends _$CalcsList {
 
   bool setAnsStudent(int index) {
     final ansStudentString = ref.read(ansStudentProvider);
-    log(ansStudentString);
+    //log(ansStudentString);
     ref.read(ansStudentProvider.notifier).update('');
 
     if (ansStudentString.isNotEmpty) {
       NumberQ? ansStudent = NumberQ.parse(ansStudentString);
       if (ansStudent != null) {
-        log('$state');
+        //log('$state');
         state[index] = state[index].copyWith(ansStudent: ansStudent);
-        log('$state');
+        //log('$state');
         return true;
       } else {
         return false;
@@ -315,15 +315,15 @@ class RegisterTraining extends _$RegisterTraining {
         taskSelected.id!,
       );
       ref.read(registerStatusProvider.notifier).state = RegisterStatus.success;
-    } on B4aException catch (e, st) {
+    } on B4aException catch (e) {
       // ref.read(userLoginErrorProvider.notifier).state = e.message;
       ref.read(registerStatusProvider.notifier).state = RegisterStatus.error;
-      log('$st');
-    } catch (e, st) {
+      //log('$st');
+    } catch (e) {
       // ref.read(userLoginErrorProvider.notifier).state =
       //     'Erro desconhecido no login.';
       ref.read(registerStatusProvider.notifier).state = RegisterStatus.error;
-      log('$st');
+      //log('$st');
     }
   }
 }

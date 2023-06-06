@@ -35,15 +35,15 @@ class UserLoginEmailForm extends _$UserLoginEmailForm {
       authChNotProvIR.user = user;
       ref.read(userLoginStatusProvider.notifier).state =
           UserLoginStatus.success;
-    } on B4aException catch (e, st) {
+    } on B4aException catch (e) {
       ref.read(userLoginErrorProvider.notifier).state = e.message;
       ref.read(userLoginStatusProvider.notifier).state = UserLoginStatus.error;
-      log('$st');
-    } catch (e, st) {
+      //log('$st');
+    } catch (e) {
       ref.read(userLoginErrorProvider.notifier).state =
           'Erro desconhecido no login.';
       ref.read(userLoginStatusProvider.notifier).state = UserLoginStatus.error;
-      log('$st');
+      //log('$st');
     }
   }
 
@@ -56,16 +56,16 @@ class UserLoginEmailForm extends _$UserLoginEmailForm {
       await repository.requestPasswordReset(email);
       ref.read(userLoginStatusProvider.notifier).state =
           UserLoginStatus.success;
-    } on B4aException catch (e, st) {
+    } on B4aException catch (e) {
       ref.read(userLoginErrorProvider.notifier).state = e.message;
       ref.read(userLoginStatusProvider.notifier).state = UserLoginStatus.error;
-      log('$st');
-    } catch (e, st) {
+      //log('$st');
+    } catch (e) {
       ref.read(userLoginErrorProvider.notifier).state =
           'Erro desconhecido ao resetar senha.';
       ref.read(userLoginStatusProvider.notifier).state = UserLoginStatus.error;
-      log('$st');
-      log('$st');
+      //log('$st');
+      //log('$st');
     }
   }
 }

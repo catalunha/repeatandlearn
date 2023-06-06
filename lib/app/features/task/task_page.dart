@@ -42,9 +42,9 @@ class TaskPage extends ConsumerWidget {
               );
             },
             error: (error, stackTrace) {
-              log('Erro em TaskPage build');
-              log('$error');
-              log('$stackTrace');
+              //log('Erro em TaskPage build');
+              //log('$error');
+              //log('$stackTrace');
               return const Center(
                 child: Text('Erro em buscar userResponse'),
               );
@@ -59,9 +59,9 @@ class TaskPage extends ConsumerWidget {
           );
         },
         error: (error, stackTrace) {
-          log('Erro em TaskPage build');
-          log('$error');
-          log('$stackTrace');
+          //log('Erro em TaskPage build');
+          //log('$error');
+          //log('$stackTrace');
           return const Center(
             child: Text('Erro em buscar tasks'),
           );

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -62,9 +60,9 @@ class CalcStartPage extends ConsumerWidget {
           );
         },
         error: (error, stackTrace) {
-          log('Erro em CalcPage build');
-          log('$error');
-          log('$stackTrace');
+          //log('Erro em CalcPage build');
+          //log('$error');
+          //log('$stackTrace');
           return const Center(
             child: Text('Erro'),
           );

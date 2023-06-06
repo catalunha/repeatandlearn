@@ -80,7 +80,7 @@ final indexCurrentProvider = NotifierProvider<IndexCurrent, int>.internal(
 );
 
 typedef _$IndexCurrent = Notifier<int>;
-String _$calcsListHash() => r'79f3aa0d8e4d5fae75a45345a17bd27a2df8653e';
+String _$calcsListHash() => r'e9f91e992d190225251c994038cf84ad0691f290';
 
 /// See also [CalcsList].
 @ProviderFor(CalcsList)
@@ -111,7 +111,7 @@ final timerResolutionProvider =
 );
 
 typedef _$TimerResolution = Notifier<TimerResolutionState>;
-String _$registerTrainingHash() => r'7fd4c698480110f9fc7cf0aaaf66f5c69f7484cb';
+String _$registerTrainingHash() => r'd66d90b17e1ce527c8b6dcce0b53245705ac3803';
 
 /// See also [RegisterTraining].
 @ProviderFor(RegisterTraining)

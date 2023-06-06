@@ -7,7 +7,7 @@ part of 'providers.dart';
 // **************************************************************************
 
 String _$userLoginEmailFormHash() =>
-    r'da3f070ef5b3bd5139a32a3d30f4dfe097636b87';
+    r'369418f61977cf24103aa0ee1da9df8c8288df92';
 
 /// See also [UserLoginEmailForm].
 @ProviderFor(UserLoginEmailForm)
