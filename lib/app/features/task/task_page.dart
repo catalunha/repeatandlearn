@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:repeatandlearn/app/features/task/controller/providers.dart';
 
 import '../home/controller/providers.dart';
 import 'comp/task_card.dart';
+import 'controller/providers.dart';
 
 class TaskPage extends ConsumerWidget {
   const TaskPage({

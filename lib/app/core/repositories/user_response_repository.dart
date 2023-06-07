@@ -1,6 +1,6 @@
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
-import 'package:repeatandlearn/app/data/b4a/table/user_response_b4a.dart';
 
+import '../../data/b4a/table/user_response_b4a.dart';
 import '../../data/utils/pagination.dart';
 import '../models/user_response_model.dart';
 

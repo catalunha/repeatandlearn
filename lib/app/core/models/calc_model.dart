@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:repeatandlearn/app/core/NumberQ/calc_type_01.dart';
-import 'package:repeatandlearn/app/core/models/task_model.dart';
 
+import '../NumberQ/calc_type_01.dart';
 import 'calc_type_model.dart';
 import 'level_model.dart';
+import 'task_model.dart';
 
 part 'calc_model.freezed.dart';
 

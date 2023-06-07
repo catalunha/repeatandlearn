@@ -111,7 +111,7 @@ final timerResolutionProvider =
 );
 
 typedef _$TimerResolution = Notifier<TimerResolutionState>;
-String _$registerTrainingHash() => r'd66d90b17e1ce527c8b6dcce0b53245705ac3803';
+String _$registerTrainingHash() => r'6c70838e996af8d1b26e512a68c64e81adfa01b5';
 
 /// See also [RegisterTraining].
 @ProviderFor(RegisterTraining)

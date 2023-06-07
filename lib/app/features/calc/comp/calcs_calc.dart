@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:repeatandlearn/app/features/calc/controller/providers.dart';
+
+import '../controller/providers.dart';
 
 class CalcsCalc extends ConsumerWidget {
   const CalcsCalc({Key? key}) : super(key: key);

@@ -1,8 +1,8 @@
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
-import 'package:repeatandlearn/app/core/repositories/repositories_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/models/level_model.dart';
+import '../../../core/repositories/repositories_providers.dart';
 import '../../../data/b4a/entity/level_entity.dart';
 
 part 'providers.g.dart';

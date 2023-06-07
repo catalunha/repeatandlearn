@@ -23,8 +23,8 @@ class CalcsPage extends ConsumerWidget with Messages {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Calcs'),
-        // automaticallyImplyLeading: false,
-        // leading: null,
+        automaticallyImplyLeading: false,
+        leading: null,
       ),
       body: Center(
         child: SingleChildScrollView(

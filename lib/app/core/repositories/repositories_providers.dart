@@ -1,11 +1,11 @@
-import 'package:repeatandlearn/app/core/repositories/user_profile_repository.dart';
-import 'package:repeatandlearn/app/core/repositories/user_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../data/b4a/table/user_b4a.dart';
 import 'calc_repository.dart';
 import 'level_repository.dart';
 import 'task_repository.dart';
+import 'user_profile_repository.dart';
+import 'user_repository.dart';
 import 'user_response_repository.dart';
 
 part 'repositories_providers.g.dart';

@@ -1,13 +1,12 @@
-import 'dart:developer';
 import 'dart:core';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
-import 'package:repeatandlearn/app/core/authentication/riverpod/auth_prov.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/NumberQ/calc_type_01.dart';
 import '../../../core/NumberQ/number_q.dart';
+import '../../../core/authentication/riverpod/auth_prov.dart';
 import '../../../core/models/calc_model.dart';
 import '../../../core/models/user_response_model.dart';
 import '../../../core/repositories/repositories_providers.dart';
@@ -315,7 +314,7 @@ class RegisterTraining extends _$RegisterTraining {
         taskSelected.id!,
       );
       ref.read(registerStatusProvider.notifier).state = RegisterStatus.success;
-    } on B4aException catch (e) {
+    } on B4aException {
       // ref.read(userLoginErrorProvider.notifier).state = e.message;
       ref.read(registerStatusProvider.notifier).state = RegisterStatus.error;
       //log('$st');

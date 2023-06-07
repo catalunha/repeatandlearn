@@ -3,9 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-import 'package:repeatandlearn/app/core/models/user_response_model.dart';
-
 import '../../../core/models/task_model.dart';
+import '../../../core/models/user_response_model.dart';
 import '../../../routes.dart';
 import '../../utils/app_photo_show.dart';
 import '../controller/providers.dart';

@@ -40,6 +40,8 @@ class CalcReportPage extends ConsumerWidget with Loader, Messages {
     return Scaffold(
       appBar: AppBar(
         title: const Text('CalcsReport'),
+        automaticallyImplyLeading: false,
+        leading: null,
       ),
       body: Column(
         children: [

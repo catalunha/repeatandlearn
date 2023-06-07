@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:repeatandlearn/app/core/models/level_model.dart';
+
+import 'level_model.dart';
 
 part 'task_model.freezed.dart';
 
