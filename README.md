@@ -4,7 +4,7 @@ Seja bem vindo,
 
 Aqui aprendemos matemática por repetição contínua e esparçada.
 
-Disponível em: https://repeatandlearnteacher.b4a.app/
+Disponível em: https://repeatandlearn.b4a.app/
 
 Status atual: Em desenvolvimento.
 
