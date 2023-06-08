@@ -5,6 +5,7 @@ Parse.Cloud.afterSave(Parse.User, async (req) => {
 
   if (user.get('userProfile') === undefined) {
     const userProfile = new Parse.Object("UserProfile");
+    userProfile.set('userName', user.get('username'));
     userProfile.set('email', user.get('email'));
     let userProfileResult = await userProfile.save(null, { useMasterKey: true });
     user.set('userProfile', userProfileResult);
@@ -21,5 +22,11 @@ Parse.Cloud.afterDelete(Parse.User, async (req) => {
   const userProfile = new Parse.Object("UserProfile");
   userProfile.id = userProfileId;
   await userProfile.destroy({ useMasterKey: true });
-
+});
+Parse.Cloud.define("setEmailVerification", async (request) => {
+  const user = new Parse.Object("_User");
+  user.id = request.params.userId;
+  user.set('emailVerified', true);
+  await user.save(null, { useMasterKey: true });
+  return true;
 });
