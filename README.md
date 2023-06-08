@@ -8,6 +8,10 @@ Disponível em: https://repeatandlearn.b4a.app/
 
 Status atual: Em desenvolvimento.
 
+Para uso do professor esta em desenvolvimento o Repeat And Learn - Teacher
+Veja aqui: https://github.com/catalunha/repeatandlearnteacher
+
+
 # Stack
 
 * Riverpod
