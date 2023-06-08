@@ -3,3 +3,13 @@
 Seja bem vindo,
 
 Aqui aprendemos matemática por repetição contínua e esparçada.
+
+Disponível em: https://repeatandlearnteacher.b4a.app/
+
+Status atual: Em desenvolvimento.
+
+# Stack
+
+* Riverpod
+* GoRouter
+* Backend com ParseServe na Back4app
