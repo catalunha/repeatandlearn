@@ -10,7 +10,11 @@ import 'user_response_repository.dart';
 
 part 'repositories_providers.g.dart';
 
-final userB4aProvider = Provider<UserB4a>((ref) => UserB4a());
+@riverpod
+UserB4a userB4a(UserB4aRef ref) {
+  return UserB4a();
+}
+// final userB4aProvider = Provider<UserB4a>((ref) => UserB4a());
 
 final userRepositoryProvider = Provider<UserRepository>(
     (ref) => UserRepository(userB4a: ref.read(userB4aProvider)));

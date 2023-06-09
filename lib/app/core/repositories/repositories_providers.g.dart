@@ -6,6 +6,20 @@ part of 'repositories_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$userB4aHash() => r'bc13b3d54566df75d8c66217fc754956357d2aca';
+
+/// See also [userB4a].
+@ProviderFor(userB4a)
+final userB4aProvider = AutoDisposeProvider<UserB4a>.internal(
+  userB4a,
+  name: r'userB4aProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$userB4aHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef UserB4aRef = AutoDisposeProviderRef<UserB4a>;
 String _$userProfileRepositoryHash() =>
     r'328854b595bf97576d62baf57e80ec59e36a5858';
 
