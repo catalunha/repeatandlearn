@@ -157,7 +157,7 @@ bool canGoToIndexPrevious(CanGoToIndexPreviousRef ref) {
 }
 
 @riverpod
-bool inLastIndexCurrent(CanGoToIndexPreviousRef ref) {
+bool inLastIndexCurrent(InLastIndexCurrentRef ref) {
   final indexEnd = ref.read(indexEndProvider);
 
   return ref.watch(indexCurrentProvider) == (indexEnd - 1);
